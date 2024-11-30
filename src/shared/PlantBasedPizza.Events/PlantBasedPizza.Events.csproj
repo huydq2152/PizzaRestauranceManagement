@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PlantBasedPizza.Shared\PlantBasedPizza.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CloudNative.CloudEvents" Version="2.7.1" />
+    <PackageReference Include="CloudNative.CloudEvents.AspNetCore" Version="2.7.1" />
+    <PackageReference Include="CloudNative.CloudEvents.NewtonsoftJson" Version="2.7.1" />
+    <PackageReference Include="Saunter" Version="0.13.0" />
+  </ItemGroup>
+
+</Project>
