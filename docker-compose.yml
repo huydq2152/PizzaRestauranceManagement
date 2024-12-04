@@ -16,6 +16,11 @@ services:
       - 13133:13133
       - 4317:4317
       - 4318:4318
+        
+  consul:
+    image: hashicorp/consul:latest
+    ports:
+      - 8500:8500
 
   local.api:
     image: plant-based-pizza-api-mod-1
@@ -27,6 +32,11 @@ services:
       - OtlpEndpoint=http://jaeger:4317
       - Environment=local
       - Services__Loyalty=http://local.loyalty-api:8080
+      - Services__LoyaltyInternal=http://LoyaltyInternalApi
+      - Services__PaymentInternal=http://PaymentApi
+      - ServiceDiscovery__MyUrl=http://local.api:8080
+      - ServiceDiscovery__ServiceName=Api
+      - ServiceDiscovery__ConsulServiceEndpoint=http://consul:8500
 
   local.loyalty-api:
     image: loyalty-api-mod-1
@@ -37,6 +47,9 @@ services:
       - DatabaseConnection=mongodb://mongodb:27017
       - OtlpEndpoint=http://jaeger:4317
       - Environment=local
+      - ServiceDiscovery__MyUrl=http://local.loyalty-api:8080
+      - ServiceDiscovery__ServiceName=LoyaltyApi
+      - ServiceDiscovery__ConsulServiceEndpoint=http://consul:8500
   
   local.loyalty-internal-api:
     image: loyalty-internal-api-mod-3
@@ -47,3 +60,18 @@ services:
       - DatabaseConnection=mongodb://mongodb:27017
       - OtlpEndpoint=http://jaeger:4317
       - Environment=local
+      - ServiceDiscovery__MyUrl=http://local.loyalty-internal-api:8080
+      - ServiceDiscovery__ServiceName=LoyaltyInternalApi
+      - ServiceDiscovery__ConsulServiceEndpoint=http://consul:8500
+        
+  local.payment-api:
+    image: payment-api-mod-3
+    container_name: local.payment-api
+    depends_on:
+      - consul
+    environment:
+      - OtlpEndpoint=http://jaeger:4317
+      - Environment=local
+      - ServiceDiscovery__MyUrl=http://local.payment-api:8080
+      - ServiceDiscovery__ServiceName=PaymentApi
+      - ServiceDiscovery__ConsulServiceEndpoint=http://consul:8500
