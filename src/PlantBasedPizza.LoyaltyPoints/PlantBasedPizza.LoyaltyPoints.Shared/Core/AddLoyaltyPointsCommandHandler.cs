@@ -1,27 +1,16 @@
 namespace PlantBasedPizza.LoyaltyPoints.Shared.Core;
 
-public class AddLoyaltyPointsCommandHandler
+public class AddLoyaltyPointsCommandHandler(ICustomerLoyaltyPointsRepository customerLoyaltyPointsRepository)
 {
-    private readonly ICustomerLoyaltyPointsRepository _customerLoyaltyPointsRepository;
-
-    public AddLoyaltyPointsCommandHandler(ICustomerLoyaltyPointsRepository customerLoyaltyPointsRepository)
+    public async Task<LoyaltyPointsDto> Handle(AddLoyaltyPointsCommand command)
     {
-        _customerLoyaltyPointsRepository = customerLoyaltyPointsRepository;
-    }
+        var currentLoyaltyPoints = await customerLoyaltyPointsRepository.GetCurrentPointsFor(command.CustomerIdentifier) ??
+                                   CustomerLoyaltyPoints.Create(command.CustomerIdentifier);
 
-    public async Task<LoyaltyPointsDTO> Handle(AddLoyaltyPointsCommand command)
-    {
-        var currentLoyaltyPoints = await this._customerLoyaltyPointsRepository.GetCurrentPointsFor(command.CustomerIdentifier);
-        
-        if (currentLoyaltyPoints is null)
-        {
-            currentLoyaltyPoints = CustomerLoyaltyPoints.Create(command.CustomerIdentifier);   
-        }
-        
         currentLoyaltyPoints.AddLoyaltyPoints(command.OrderValue, command.OrderIdentifier);
 
-        await this._customerLoyaltyPointsRepository.UpdatePoints(currentLoyaltyPoints);
+        await customerLoyaltyPointsRepository.UpdatePoints(currentLoyaltyPoints);
 
-        return new LoyaltyPointsDTO(currentLoyaltyPoints);
+        return new LoyaltyPointsDto(currentLoyaltyPoints);
     }
 }

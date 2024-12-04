@@ -4,15 +4,8 @@ using PlantBasedPizza.LoyaltyPoints.Shared.Core;
 
 namespace PlantBasedPizza.LoyaltyPoints.Internal.Services;
 
-public class LoyaltyService : Loyalty.LoyaltyBase
+public class LoyaltyService(AddLoyaltyPointsCommandHandler handler) : Loyalty.LoyaltyBase
 {
-    private readonly AddLoyaltyPointsCommandHandler _handler;
-
-    public LoyaltyService(AddLoyaltyPointsCommandHandler handler)
-    {
-        _handler = handler;
-    }
-
     public override async Task<AddLoyaltyPointsReply> AddLoyaltyPoints(AddLoyaltyPointsRequest request, ServerCallContext context)
     {
         var command = new AddLoyaltyPointsCommand()
@@ -22,7 +15,7 @@ public class LoyaltyService : Loyalty.LoyaltyBase
             OrderValue = (decimal)request.OrderValue
         };
 
-        var result = await _handler.Handle(command);
+        var result = await handler.Handle(command);
         
         return new AddLoyaltyPointsReply()
         {
