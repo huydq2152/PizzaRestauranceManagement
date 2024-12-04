@@ -15,6 +15,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\shared\PlantBasedPizza.Events\PlantBasedPizza.Events.csproj" />
     <ProjectReference Include="..\..\shared\PlantBasedPizza.Shared\PlantBasedPizza.Shared.csproj" />
+    <ProjectReference Include="..\PlantBasedPizza.LoyaltyPoints.Shared\PlantBasedPizza.LoyaltyPoints.Shared.csproj" />
   </ItemGroup>
 
 </Project>

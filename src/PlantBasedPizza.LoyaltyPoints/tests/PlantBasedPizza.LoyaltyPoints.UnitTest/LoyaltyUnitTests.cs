@@ -1,6 +1,6 @@
 using FakeItEasy;
 using FluentAssertions;
-using PlantBasedPizza.LoyaltyPoints.Core;
+using PlantBasedPizza.LoyaltyPoints.Shared.Core;
 
 namespace PlantBasedPizza.LoyaltyPoints.UnitTest;
 

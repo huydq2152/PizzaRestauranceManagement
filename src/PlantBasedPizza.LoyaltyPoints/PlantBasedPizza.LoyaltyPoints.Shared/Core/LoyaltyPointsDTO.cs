@@ -1,13 +1,13 @@
 using System.Text.Json.Serialization;
 
-namespace PlantBasedPizza.LoyaltyPoints.Core;
+namespace PlantBasedPizza.LoyaltyPoints.Shared.Core;
 
 public class LoyaltyPointsDTO
 {
     public LoyaltyPointsDTO(CustomerLoyaltyPoints points)
     {
-        this.CustomerIdentifier = points.CustomerId;
-        this.TotalPoints = points.TotalPoints;
+        CustomerIdentifier = points.CustomerId;
+        TotalPoints = points.TotalPoints;
     }
     
     [JsonPropertyName("customerIdentifier")]

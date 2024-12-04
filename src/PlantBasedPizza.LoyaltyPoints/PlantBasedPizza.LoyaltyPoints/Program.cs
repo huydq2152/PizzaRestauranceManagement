@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 using PlantBasedPizza.LoyaltyPoints;
-using PlantBasedPizza.LoyaltyPoints.Adapters;
-using PlantBasedPizza.LoyaltyPoints.Core;
+using PlantBasedPizza.LoyaltyPoints.Shared.Adapters;
+using PlantBasedPizza.LoyaltyPoints.Shared.Core;
 using PlantBasedPizza.Shared;
 
 var builder = WebApplication.CreateBuilder(args);

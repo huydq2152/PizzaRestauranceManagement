@@ -1,4 +1,4 @@
-namespace PlantBasedPizza.LoyaltyPoints.Core;
+namespace PlantBasedPizza.LoyaltyPoints.Shared.Core;
 
 public class SpendLoyaltyPointsCommandHandler
 {
@@ -11,7 +11,7 @@ public class SpendLoyaltyPointsCommandHandler
 
     public async Task<LoyaltyPointsDTO> Handle(SpendLoyaltyPointsCommand command)
     {
-        var currentLoyaltyPoints = await this._customerLoyaltyPointsRepository.GetCurrentPointsFor(command.CustomerIdentifier);
+        var currentLoyaltyPoints = await _customerLoyaltyPointsRepository.GetCurrentPointsFor(command.CustomerIdentifier);
     
         if (currentLoyaltyPoints is null)
         {
@@ -20,7 +20,7 @@ public class SpendLoyaltyPointsCommandHandler
     
         currentLoyaltyPoints.SpendPoints(command.PointsToSpend, command.OrderIdentifier);
 
-        await this._customerLoyaltyPointsRepository.UpdatePoints(currentLoyaltyPoints);
+        await _customerLoyaltyPointsRepository.UpdatePoints(currentLoyaltyPoints);
 
         return new LoyaltyPointsDTO(currentLoyaltyPoints);
     }
