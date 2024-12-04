@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
 using PlantBasedPizza.LoyaltyPoints.Internal.Services;
 using PlantBasedPizza.LoyaltyPoints.Shared;
 

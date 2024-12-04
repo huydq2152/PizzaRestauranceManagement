@@ -7,15 +7,15 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Grpc.AspNetCore" Version="2.57.0"/>
+        <PackageReference Include="Grpc.AspNetCore" Version="2.67.0"/>
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\PlantBasedPizza.LoyaltyPoints.Shared\PlantBasedPizza.LoyaltyPoints.Shared.csproj" />
+        <ProjectReference Include="..\..\Shared\PlantBasedPizza.Shared\PlantBasedPizza.Shared.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-        <Protobuf Include="Protos\loyalty.proto" GrpcServices="Server" />
+        <Protobuf Include="Protos\payment.proto" GrpcServices="Server"/>
     </ItemGroup>
 
 </Project>
