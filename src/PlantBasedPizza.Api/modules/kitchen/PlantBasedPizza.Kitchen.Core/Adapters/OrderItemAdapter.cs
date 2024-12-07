@@ -1,8 +1,7 @@
-namespace PlantBasedPizza.Kitchen.Core.Adapters
+namespace PlantBasedPizza.Kitchen.Core.Adapters;
+
+public class OrderItemAdapter
 {
-    public class OrderItemAdapter
-    {
-        public string ItemName { get; init; } = "";
-        public string RecipeIdentifier { get; init; } = "";
-    }
+    public string ItemName { get; init; } = "";
+    public string RecipeIdentifier { get; init; } = "";
 }

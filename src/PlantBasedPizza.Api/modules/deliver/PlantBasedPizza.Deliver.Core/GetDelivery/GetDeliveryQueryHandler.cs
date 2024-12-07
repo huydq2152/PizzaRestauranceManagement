@@ -3,21 +3,14 @@ using PlantBasedPizza.Deliver.Core.Entities;
 
 namespace PlantBasedPizza.Deliver.Core.GetDelivery;
 
-public class GetDeliveryQueryHandler
+public class GetDeliveryQueryHandler(IDeliveryRequestRepository deliveryRequestRepository)
 {
-    private readonly IDeliveryRequestRepository _deliveryRequestRepository;
-
-    public GetDeliveryQueryHandler(IDeliveryRequestRepository deliveryRequestRepository)
-    {
-        _deliveryRequestRepository = deliveryRequestRepository;
-    }
-
-    public async Task<DeliveryRequestDTO> Handle(GetDeliveryQuery query)
+    public async Task<DeliveryRequestDto?> Handle(GetDeliveryQuery query)
     {
         Activity.Current?.AddTag("orderIdentifier", query.OrderIdentifier);
             
-        var deliveryRequest = await this._deliveryRequestRepository.GetDeliveryStatusForOrder(query.OrderIdentifier);
+        var deliveryRequest = await deliveryRequestRepository.GetDeliveryStatusForOrder(query.OrderIdentifier);
 
-        return new DeliveryRequestDTO(deliveryRequest);
+        return deliveryRequest != null ? new DeliveryRequestDto(deliveryRequest) : null;
     }
 }

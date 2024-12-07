@@ -7,19 +7,14 @@ namespace PlantBasedPizza.E2ETests.Drivers
 {
     public class OrderManagerDriver
     {
-        private static string BaseUrl = TestConstants.DefaultTestUrl;
+        private static readonly string BaseUrl = TestConstants.DefaultTestUrl;
 
-        private readonly HttpClient _httpClient;
-
-        public OrderManagerDriver()
-        {
-            this._httpClient = new HttpClient();
-        }
+        private readonly HttpClient _httpClient = new();
 
         public async Task AddNewDeliveryOrder(string orderIdentifier, string customerIdentifier)
         {
-            await this._httpClient.PostAsync(new Uri($"{BaseUrl}/order/deliver"), new StringContent(
-                JsonConvert.SerializeObject(new CreateDeliveryOrder()
+            await _httpClient.PostAsync(new Uri($"{BaseUrl}/order/deliver"), new StringContent(
+                JsonConvert.SerializeObject(new CreateDeliveryOrder
                 {
                     OrderIdentifier = orderIdentifier,
                     CustomerIdentifier = customerIdentifier,
@@ -34,8 +29,8 @@ namespace PlantBasedPizza.E2ETests.Drivers
 
         public async Task AddNewOrder(string orderIdentifier, string customerIdentifier)
         {
-            await this._httpClient.PostAsync(new Uri($"{BaseUrl}/order/pickup"), new StringContent(
-                JsonConvert.SerializeObject(new CreatePickupOrderCommand()
+            await _httpClient.PostAsync(new Uri($"{BaseUrl}/order/pickup"), new StringContent(
+                JsonConvert.SerializeObject(new CreatePickupOrderCommand
                 {
                     OrderIdentifier = orderIdentifier,
                     CustomerIdentifier = customerIdentifier
@@ -44,11 +39,11 @@ namespace PlantBasedPizza.E2ETests.Drivers
 
         public async Task AddItemToOrder(string orderIdentifier, string recipeIdentifier, int quantity)
         {
-            await checkRecipeExists(recipeIdentifier).ConfigureAwait(false);
+            await CheckRecipeExists(recipeIdentifier).ConfigureAwait(false);
 
-            await this._httpClient.PostAsync(new Uri($"{BaseUrl}/order/{orderIdentifier}/items"),
+            await _httpClient.PostAsync(new Uri($"{BaseUrl}/order/{orderIdentifier}/items"),
                 new StringContent(
-                    JsonConvert.SerializeObject(new AddItemToOrderCommand()
+                    JsonConvert.SerializeObject(new AddItemToOrderCommand
                     {
                         OrderIdentifier = orderIdentifier,
                         RecipeIdentifier = recipeIdentifier,
@@ -58,14 +53,14 @@ namespace PlantBasedPizza.E2ETests.Drivers
 
         public async Task SubmitOrder(string orderIdentifier)
         {
-            await this._httpClient.PostAsync(new Uri($"{BaseUrl}/order/{orderIdentifier}/submit"),
+            await _httpClient.PostAsync(new Uri($"{BaseUrl}/order/{orderIdentifier}/submit"),
                 new StringContent(string.Empty, Encoding.UTF8, "application/json")).ConfigureAwait(false);
         }
 
         public async Task CollectOrder(string orderIdentifier)
         {
-            var res = await this._httpClient.PostAsync(new Uri($"{BaseUrl}/order/collected"), new StringContent(
-                JsonConvert.SerializeObject(new CollectOrderRequest()
+            var res = await _httpClient.PostAsync(new Uri($"{BaseUrl}/order/collected"), new StringContent(
+                JsonConvert.SerializeObject(new CollectOrderRequest
                 {
                     OrderIdentifier = orderIdentifier
                 }), Encoding.UTF8, "application/json")).ConfigureAwait(false);
@@ -78,7 +73,7 @@ namespace PlantBasedPizza.E2ETests.Drivers
 
         public async Task<Order> GetOrder(string orderIdentifier)
         {
-            var result = await this._httpClient.GetAsync(new Uri($"{BaseUrl}/order/{orderIdentifier}/detail"))
+            var result = await _httpClient.GetAsync(new Uri($"{BaseUrl}/order/{orderIdentifier}/detail"))
                 .ConfigureAwait(false);
 
             var order = JsonConvert.DeserializeObject<Order>(await result.Content.ReadAsStringAsync());
@@ -86,17 +81,17 @@ namespace PlantBasedPizza.E2ETests.Drivers
             return order;
         }
 
-        private async Task checkRecipeExists(string recipeIdentifier)
+        private async Task CheckRecipeExists(string recipeIdentifier)
         {
-            await this._httpClient.PostAsync($"{BaseUrl}/recipes", new StringContent(
-                JsonConvert.SerializeObject(new CreateRecipeCommand()
+            await _httpClient.PostAsync($"{BaseUrl}/recipes", new StringContent(
+                JsonConvert.SerializeObject(new CreateRecipeCommand
                 {
                     RecipeIdentifier = recipeIdentifier,
                     Name = recipeIdentifier,
                     Price = 10,
                     Ingredients = new List<CreateRecipeCommandItem>(1)
                     {
-                        new CreateRecipeCommandItem()
+                        new CreateRecipeCommandItem
                         {
                             Name = "Pizza",
                             Quantity = 1

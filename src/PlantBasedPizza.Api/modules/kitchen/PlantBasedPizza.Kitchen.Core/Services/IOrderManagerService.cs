@@ -1,10 +1,8 @@
-using System.Threading.Tasks;
 using PlantBasedPizza.Kitchen.Core.Adapters;
 
-namespace PlantBasedPizza.Kitchen.Core.Services
+namespace PlantBasedPizza.Kitchen.Core.Services;
+
+public interface IOrderManagerService
 {
-    public interface IOrderManagerService
-    {
-        Task<OrderAdapter> GetOrderDetails(string orderIdentifier);
-    }
+    Task<OrderAdapter> GetOrderDetails(string orderIdentifier);
 }

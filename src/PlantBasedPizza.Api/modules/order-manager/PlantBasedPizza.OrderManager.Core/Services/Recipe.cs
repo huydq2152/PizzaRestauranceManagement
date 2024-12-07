@@ -1,9 +1,8 @@
-namespace PlantBasedPizza.OrderManager.Core.ViewModels
-{
-    public class Recipe
-    {
-        public string ItemName { get; init; } = "";
+namespace PlantBasedPizza.OrderManager.Core.Services;
 
-        public decimal Price { get; init; }
-    }
+public class Recipe
+{
+    public string ItemName { get; init; } = "";
+
+    public decimal Price { get; init; }
 }

@@ -1,35 +1,26 @@
-using System.Threading.Tasks;
 using PlantBasedPizza.Kitchen.Core.Adapters;
 using PlantBasedPizza.Kitchen.Core.Services;
 using PlantBasedPizza.OrderManager.Core.Entities;
 
-namespace PlantBasedPizza.Kitchen.Infrastructure
+namespace PlantBasedPizza.Kitchen.Infrastructure;
+
+public class OrderManagerService(IOrderRepository orderRepo) : IOrderManagerService
 {
-    public class OrderManagerService : IOrderManagerService
+    public async Task<OrderAdapter> GetOrderDetails(string orderIdentifier)
     {
-        private readonly IOrderRepository _orderRepo;
+        var order = await orderRepo.Retrieve(orderIdentifier).ConfigureAwait(false);
 
-        public OrderManagerService(IOrderRepository orderRepo)
+        var orderAdapter = new OrderAdapter();
+
+        foreach (var orderItem in order.Items)
         {
-            _orderRepo = orderRepo;
-        }
-
-        public async Task<OrderAdapter> GetOrderDetails(string orderIdentifier)
-        {
-            var order = await this._orderRepo.Retrieve(orderIdentifier).ConfigureAwait(false);
-
-            var orderAdapter = new OrderAdapter();
-
-            foreach (var orderItem in order.Items)
+            orderAdapter.Items.Add(new OrderItemAdapter()
             {
-                orderAdapter.Items.Add(new OrderItemAdapter()
-                {
-                    ItemName = orderItem.ItemName,
-                    RecipeIdentifier = orderItem.RecipeIdentifier
-                });
-            }
-
-            return orderAdapter;
+                ItemName = orderItem.ItemName,
+                RecipeIdentifier = orderItem.RecipeIdentifier
+            });
         }
+
+        return orderAdapter;
     }
 }

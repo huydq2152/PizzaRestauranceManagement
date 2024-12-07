@@ -3,19 +3,12 @@ using PlantBasedPizza.OrderManager.Core.Services;
 
 namespace PlantBasedPizza.OrderManager.Infrastructure;
 
-public class PaymentService : IPaymentService
+public class PaymentService(Payment.PaymentClient paymentClient) : IPaymentService
 {
-    private readonly Payment.PaymentClient _paymentClient;
-
-    public PaymentService(Payment.PaymentClient paymentClient)
-    {
-        _paymentClient = paymentClient;
-    }
-
     public async Task<TakePaymentResult> TakePaymentFor(Order order)
     {
         var result =
-            await this._paymentClient.TakePaymentAsync(new TakePaymentRequest()
+            await paymentClient.TakePaymentAsync(new TakePaymentRequest()
             {
                 CustomerIdentifier = order.CustomerIdentifier,
                 PaymentAmount = Convert.ToDouble(order.TotalPrice)

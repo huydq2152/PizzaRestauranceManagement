@@ -1,11 +1,10 @@
-namespace PlantBasedPizza.Kitchen.Core.Entities
+namespace PlantBasedPizza.Kitchen.Core.Entities;
+
+public enum OrderState
 {
-    public enum OrderState
-    {
-        NEW,
-        PREPARING,
-        BAKING,
-        QUALITYCHECK,
-        DONE
-    }
+    New,
+    Preparing,
+    Baking,
+    Qualitycheck,
+    Done
 }

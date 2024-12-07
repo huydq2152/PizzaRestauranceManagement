@@ -1,7 +1,6 @@
-namespace PlantBasedPizza.IntegrationTests.ViewModels
+namespace PlantBasedPizza.IntegrationTests.ViewModels;
+
+public class MarkOrderDeliveredRequest
 {
-    public class MarkOrderDeliveredRequest
-    {
-        public string OrderIdentifier { get; set; }
-    }
+    public string OrderIdentifier { get; set; }
 }

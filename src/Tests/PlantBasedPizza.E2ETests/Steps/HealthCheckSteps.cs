@@ -8,7 +8,7 @@ namespace PlantBasedPizza.E2ETests.Steps;
 public class HealthCheckSteps
 {
     private readonly HealthCheckDriver _driver;
-    private bool loyaltyPointOnline = true;
+    private bool _loyaltyPointOnline = true;
 
     public HealthCheckSteps(ScenarioContext scenarioContext)
     {
@@ -24,13 +24,13 @@ public class HealthCheckSteps
     [When(@"the loyalty point service is offline")]
     public void WhenTheLoyaltyPointServiceIsOffline()
     {
-        this.loyaltyPointOnline = false;
+        this._loyaltyPointOnline = false;
     }
 
     [Then(@"a (.*) status code is returned")]
     public async Task ThenAStatusCodeIsReturned(int p0)
     {
-        var res = await this._driver.HealthCheck(loyaltyPointOnline);
+        var res = await this._driver.HealthCheck(_loyaltyPointOnline);
 
         res.Should().Be(p0);
     }

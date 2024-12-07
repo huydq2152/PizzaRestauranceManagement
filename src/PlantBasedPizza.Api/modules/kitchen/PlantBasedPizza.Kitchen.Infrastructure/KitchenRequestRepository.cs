@@ -39,7 +39,7 @@ public class KitchenRequestRepository : IKitchenRequestRepository
 
     public async Task<IEnumerable<KitchenRequest>> GetNew()
     {
-        var queryBuilder = Builders<KitchenRequest>.Filter.Eq(p => p.OrderState, OrderState.NEW);
+        var queryBuilder = Builders<KitchenRequest>.Filter.Eq(p => p.OrderState, OrderState.New);
 
         var kitchenRequests = await this._kitchenRequests.FindAsync(queryBuilder).ConfigureAwait(false);
 
@@ -48,7 +48,7 @@ public class KitchenRequestRepository : IKitchenRequestRepository
 
     public async Task<IEnumerable<KitchenRequest>> GetPrep()
     {
-        var queryBuilder = Builders<KitchenRequest>.Filter.Eq(p => p.OrderState, OrderState.PREPARING);
+        var queryBuilder = Builders<KitchenRequest>.Filter.Eq(p => p.OrderState, OrderState.Preparing);
 
         var kitchenRequests = await this._kitchenRequests.FindAsync(queryBuilder).ConfigureAwait(false);
 
@@ -57,7 +57,7 @@ public class KitchenRequestRepository : IKitchenRequestRepository
 
     public async Task<IEnumerable<KitchenRequest>> GetBaking()
     {
-        var queryBuilder = Builders<KitchenRequest>.Filter.Eq(p => p.OrderState, OrderState.BAKING);
+        var queryBuilder = Builders<KitchenRequest>.Filter.Eq(p => p.OrderState, OrderState.Baking);
 
         var kitchenRequests = await this._kitchenRequests.FindAsync(queryBuilder).ConfigureAwait(false);
 
@@ -66,7 +66,7 @@ public class KitchenRequestRepository : IKitchenRequestRepository
 
     public async Task<IEnumerable<KitchenRequest>> GetAwaitingQualityCheck()
     {
-        var queryBuilder = Builders<KitchenRequest>.Filter.Eq(p => p.OrderState, OrderState.QUALITYCHECK);
+        var queryBuilder = Builders<KitchenRequest>.Filter.Eq(p => p.OrderState, OrderState.Qualitycheck);
 
         var kitchenRequests = await this._kitchenRequests.FindAsync(queryBuilder).ConfigureAwait(false);
 

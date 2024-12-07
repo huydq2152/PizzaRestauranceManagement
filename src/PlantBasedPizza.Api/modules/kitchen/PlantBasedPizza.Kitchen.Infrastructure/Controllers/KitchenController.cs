@@ -3,168 +3,161 @@ using PlantBasedPizza.Kitchen.Core.Entities;
 using PlantBasedPizza.Kitchen.Infrastructure.DataTransfer;
 using PlantBasedPizza.Shared.Logging;
 
-namespace PlantBasedPizza.Kitchen.Infrastructure.Controllers
+namespace PlantBasedPizza.Kitchen.Infrastructure.Controllers;
+
+[Route("kitchen")]
+public class KitchenController(
+    IKitchenRequestRepository kitchenRequestRepository,
+    IObservabilityService observabilityService)
+    : ControllerBase
 {
-    [Route("kitchen")]
-    public class KitchenController : ControllerBase
+    /// <summary>
+    /// Get a list of all new kitchen requests.
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet("new")]
+    public IEnumerable<KitchenRequestDto> GetNew()
     {
-        private readonly IKitchenRequestRepository _kitchenRequestRepository;
-        private readonly IObservabilityService _observabilityService;
-
-        public KitchenController(IKitchenRequestRepository kitchenRequestRepository, IObservabilityService observabilityService)
+        try
         {
-            _kitchenRequestRepository = kitchenRequestRepository;
-            this._observabilityService = observabilityService;
+            var queryResults = kitchenRequestRepository.GetNew().Result;
+
+            return queryResults.Select(p => new KitchenRequestDto(p)).ToList();
         }
-
-        /// <summary>
-        /// Get a list of all new kitchen requests.
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("new")]
-        public IEnumerable<KitchenRequestDTO> GetNew()
+        catch (Exception ex)
         {
-            try
-            {
-                var queryResults = this._kitchenRequestRepository.GetNew().Result;
-
-                return queryResults.Select(p => new KitchenRequestDTO(p)).ToList();
-            }
-            catch (Exception ex)
-            {
-                this._observabilityService.Error(ex, "Error processing");
-                return new List<KitchenRequestDTO>();
-            }
+            observabilityService.Error(ex, "Error processing");
+            return new List<KitchenRequestDto>();
         }
+    }
 
-        /// <summary>
-        /// Mark an order has being prepared.
-        /// </summary>
-        /// <param name="orderIdentifier">The order identifier.</param>
-        /// <returns></returns>
-        [HttpPut("{orderIdentifier}/preparing")]
-        public KitchenRequest Preparing(string orderIdentifier)
+    /// <summary>
+    /// Mark an order has being prepared.
+    /// </summary>
+    /// <param name="orderIdentifier">The order identifier.</param>
+    /// <returns></returns>
+    [HttpPut("{orderIdentifier}/preparing")]
+    public KitchenRequest Preparing(string orderIdentifier)
+    {
+        ApplicationLogger.Info("Received request to prepare order");
+
+        var kitchenRequest = kitchenRequestRepository.Retrieve(orderIdentifier).Result;
+
+        kitchenRequest.Preparing(Request.Headers["CorrelationId"].ToString());
+
+        kitchenRequestRepository.Update(kitchenRequest).Wait();
+
+        return kitchenRequest;
+    }
+
+    /// <summary>
+    /// List all orders that are currently being prepared.
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet("prep")]
+    public IEnumerable<KitchenRequestDto> GetPrep()
+    {
+        try
         {
-            ApplicationLogger.Info("Received request to prepare order");
+            var queryResults = kitchenRequestRepository.GetPrep().Result;
 
-            var kitchenRequest = this._kitchenRequestRepository.Retrieve(orderIdentifier).Result;
-
-            kitchenRequest.Preparing(this.Request.Headers["CorrelationId"].ToString());
-
-            this._kitchenRequestRepository.Update(kitchenRequest).Wait();
-
-            return kitchenRequest;
+            return queryResults.Select(p => new KitchenRequestDto(p)).ToList();
         }
-
-        /// <summary>
-        /// List all orders that are currently being prepared.
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("prep")]
-        public IEnumerable<KitchenRequestDTO> GetPrep()
+        catch (Exception ex)
         {
-            try
-            {
-                var queryResults = this._kitchenRequestRepository.GetPrep().Result;
-
-                return queryResults.Select(p => new KitchenRequestDTO(p)).ToList();
-            }
-            catch (Exception ex)
-            {
-                this._observabilityService.Error(ex, "Error processing");
-                return new List<KitchenRequestDTO>();
-            }
+            observabilityService.Error(ex, "Error processing");
+            return new List<KitchenRequestDto>();
         }
+    }
 
-        /// <summary>
-        /// Mark an order as being prepared.
-        /// </summary>
-        /// <param name="orderIdentifier">The order identifier.</param>
-        /// <returns></returns>
-        [HttpPut("{orderIdentifier}/prep-complete")]
-        public KitchenRequest PrepComplete(string orderIdentifier)
+    /// <summary>
+    /// Mark an order as being prepared.
+    /// </summary>
+    /// <param name="orderIdentifier">The order identifier.</param>
+    /// <returns></returns>
+    [HttpPut("{orderIdentifier}/prep-complete")]
+    public KitchenRequest PrepComplete(string orderIdentifier)
+    {
+        var kitchenRequest = kitchenRequestRepository.Retrieve(orderIdentifier).Result;
+
+        kitchenRequest.PrepComplete(Request.Headers["CorrelationId"].ToString());
+
+        kitchenRequestRepository.Update(kitchenRequest).Wait();
+
+        return kitchenRequest;
+    }
+
+    /// <summary>
+    /// List all orders currently baking.
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet("baking")]
+    public IEnumerable<KitchenRequestDto> GetBaking()
+    {
+        try
         {
-            var kitchenRequest = this._kitchenRequestRepository.Retrieve(orderIdentifier).Result;
+            var queryResults = kitchenRequestRepository.GetBaking().Result;
 
-            kitchenRequest.PrepComplete(this.Request.Headers["CorrelationId"].ToString());
-
-            this._kitchenRequestRepository.Update(kitchenRequest).Wait();
-
-            return kitchenRequest;
+            return queryResults.Select(p => new KitchenRequestDto(p));
         }
-
-        /// <summary>
-        /// List all orders currently baking.
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("baking")]
-        public IEnumerable<KitchenRequestDTO> GetBaking()
+        catch (Exception ex)
         {
-            try
-            {
-                var queryResults = this._kitchenRequestRepository.GetBaking().Result;
-
-                return queryResults.Select(p => new KitchenRequestDTO(p));
-            }
-            catch (Exception ex)
-            {
-                this._observabilityService.Error(ex, "Error processing");
-                return new List<KitchenRequestDTO>();
-            }
+            observabilityService.Error(ex, "Error processing");
+            return new List<KitchenRequestDto>();
         }
+    }
 
-        /// <summary>
-        /// Mark an order as bake complete.
-        /// </summary>
-        /// <param name="orderIdentifier">The order identifier.</param>
-        /// <returns></returns>
-        [HttpPut("{orderIdentifier}/bake-complete")]
-        public KitchenRequest BakeComplete(string orderIdentifier)
+    /// <summary>
+    /// Mark an order as bake complete.
+    /// </summary>
+    /// <param name="orderIdentifier">The order identifier.</param>
+    /// <returns></returns>
+    [HttpPut("{orderIdentifier}/bake-complete")]
+    public KitchenRequest BakeComplete(string orderIdentifier)
+    {
+        var kitchenRequest = kitchenRequestRepository.Retrieve(orderIdentifier).Result;
+
+        kitchenRequest.BakeComplete(Request.Headers["CorrelationId"].ToString());
+
+        kitchenRequestRepository.Update(kitchenRequest).Wait();
+
+        return kitchenRequest;
+    }
+
+    /// <summary>
+    /// Mark an order as quality check completed.
+    /// </summary>
+    /// <param name="orderIdentifier">The order identifier.</param>
+    /// <returns></returns>
+    [HttpPut("{orderIdentifier}/quality-check")]
+    public KitchenRequest QualityCheckComplete(string orderIdentifier)
+    {
+        var kitchenRequest = kitchenRequestRepository.Retrieve(orderIdentifier).Result;
+
+        kitchenRequest.QualityCheckComplete(Request.Headers["CorrelationId"].ToString()).Wait();
+
+        kitchenRequestRepository.Update(kitchenRequest).Wait();
+
+        return kitchenRequest;
+    }
+
+    /// <summary>
+    /// List all orders awaiting quality check.
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet("quality-check")]
+    public IEnumerable<KitchenRequestDto> GetAwaitingQualityCheck()
+    {
+        try
         {
-            var kitchenRequest = this._kitchenRequestRepository.Retrieve(orderIdentifier).Result;
+            var queryResults = kitchenRequestRepository.GetAwaitingQualityCheck().Result;
 
-            kitchenRequest.BakeComplete(this.Request.Headers["CorrelationId"].ToString());
-
-            this._kitchenRequestRepository.Update(kitchenRequest).Wait();
-
-            return kitchenRequest;
+            return queryResults.Select(p => new KitchenRequestDto(p));
         }
-
-        /// <summary>
-        /// Mark an order as quality check completed.
-        /// </summary>
-        /// <param name="orderIdentifier">The order identifier.</param>
-        /// <returns></returns>
-        [HttpPut("{orderIdentifier}/quality-check")]
-        public KitchenRequest QualityCheckComplete(string orderIdentifier)
+        catch (Exception ex)
         {
-            var kitchenRequest = this._kitchenRequestRepository.Retrieve(orderIdentifier).Result;
-
-            kitchenRequest.QualityCheckComplete(this.Request.Headers["CorrelationId"].ToString()).Wait();
-
-            this._kitchenRequestRepository.Update(kitchenRequest).Wait();
-
-            return kitchenRequest;
-        }
-
-        /// <summary>
-        /// List all orders awaiting quality check.
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("quality-check")]
-        public IEnumerable<KitchenRequestDTO> GetAwaitingQualityCheck()
-        {
-            try
-            {
-                var queryResults = this._kitchenRequestRepository.GetAwaitingQualityCheck().Result;
-
-                return queryResults.Select(p => new KitchenRequestDTO(p));
-            }
-            catch (Exception ex)
-            {
-                this._observabilityService.Error(ex, "Error processing");
-                return new List<KitchenRequestDTO>();
-            }
+            observabilityService.Error(ex, "Error processing");
+            return new List<KitchenRequestDto>();
         }
     }
 }

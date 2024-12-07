@@ -1,10 +1,9 @@
 using System.Text.Json.Serialization;
 
-namespace PlantBasedPizza.OrderManager.Core.CollectOrder
+namespace PlantBasedPizza.OrderManager.Core.CollectOrder;
+
+public class CollectOrderRequest
 {
-    public class CollectOrderRequest
-    {
-        [JsonPropertyName("OrderIdentifier")]
-        public string OrderIdentifier { get; init; } = "";
-    }
+    [JsonPropertyName("OrderIdentifier")]
+    public string OrderIdentifier => "";
 }

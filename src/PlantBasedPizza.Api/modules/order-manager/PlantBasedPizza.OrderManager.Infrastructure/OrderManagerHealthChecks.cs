@@ -15,7 +15,7 @@ public class OrderManagerHealthChecks
         _httpClient = client;
 
         var address = serviceRegistry.GetServiceAddress("PlantBasedPizza-LoyaltyPoints-Internal").GetAwaiter().GetResult();
-        _grpcChannel = GrpcChannel.ForAddress(address ?? configuration["Services:LoyaltyInternal"]);
+        _grpcChannel = GrpcChannel.ForAddress((address ?? configuration["Services:LoyaltyInternal"]) ?? throw new InvalidOperationException());
     }
     
     public async Task<OrderManagerHealthCheckResult> Check()

@@ -1,20 +1,19 @@
 using System.Text.Json.Serialization;
 
-namespace PlantBasedPizza.Kitchen.Core.Adapters
+namespace PlantBasedPizza.Kitchen.Core.Adapters;
+
+public class RecipeAdapter
 {
-    public class RecipeAdapter
+    [JsonConstructor]
+    private RecipeAdapter()
     {
-        [JsonConstructor]
-        private RecipeAdapter()
-        {
-        }
-        
-        public RecipeAdapter(string recipeIdentifier)
-        {
-            this.RecipeIdentifier = recipeIdentifier;
-        }
-        
-        [JsonPropertyName("recipeIdentifier")]
-        public string RecipeIdentifier { get; set; } = "";
     }
+        
+    public RecipeAdapter(string recipeIdentifier)
+    {
+        RecipeIdentifier = recipeIdentifier;
+    }
+        
+    [JsonPropertyName("recipeIdentifier")]
+    public string RecipeIdentifier { get; set; } = "";
 }

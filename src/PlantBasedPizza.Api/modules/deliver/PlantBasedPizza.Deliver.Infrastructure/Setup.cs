@@ -6,35 +6,33 @@ using PlantBasedPizza.Deliver.Core.Handlers;
 using PlantBasedPizza.Events;
 using PlantBasedPizza.Shared.Events;
 
-namespace PlantBasedPizza.Deliver.Infrastructure
+namespace PlantBasedPizza.Deliver.Infrastructure;
+
+using MongoDB.Bson.Serialization;
+
+public static class Setup
 {
-    using MongoDB.Bson.Serialization;
-    using MongoDB.Driver;
-
-    public static class Setup
+    public static IServiceCollection AddDeliveryModuleInfrastructure(this IServiceCollection services,
+        IConfiguration configuration)
     {
-        public static IServiceCollection AddDeliveryModuleInfrastructure(this IServiceCollection services,
-            IConfiguration configuration)
+        BsonClassMap.RegisterClassMap<DeliveryRequest>(map =>
         {
-            BsonClassMap.RegisterClassMap<DeliveryRequest>(map =>
-            {
-                map.AutoMap();
-                map.SetIgnoreExtraElements(true);
-                map.SetIgnoreExtraElementsIsInherited(true);
-            });
+            map.AutoMap();
+            map.SetIgnoreExtraElements(true);
+            map.SetIgnoreExtraElementsIsInherited(true);
+        });
             
-            BsonClassMap.RegisterClassMap<Address>(map =>
-            {
-                map.AutoMap();
-                map.SetIgnoreExtraElements(true);
-                map.SetIgnoreExtraElementsIsInherited(true);
-            });
+        BsonClassMap.RegisterClassMap<Address>(map =>
+        {
+            map.AutoMap();
+            map.SetIgnoreExtraElements(true);
+            map.SetIgnoreExtraElementsIsInherited(true);
+        });
             
-            services.AddSingleton<IDeliveryRequestRepository, DeliveryRequestRepository>();
-            services.AddSingleton<Handles<OrderReadyForDeliveryEvent>, OrderReadyForDeliveryEventHandler>();
-            services.AddSingleton<GetDeliveryQueryHandler>();
+        services.AddSingleton<IDeliveryRequestRepository, DeliveryRequestRepository>();
+        services.AddSingleton<Handles<OrderReadyForDeliveryEvent>, OrderReadyForDeliveryEventHandler>();
+        services.AddSingleton<GetDeliveryQueryHandler>();
 
-            return services;
-        }
+        return services;
     }
 }

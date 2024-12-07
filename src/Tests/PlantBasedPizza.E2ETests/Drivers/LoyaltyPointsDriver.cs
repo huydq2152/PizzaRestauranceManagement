@@ -6,21 +6,16 @@ namespace PlantBasedPizza.E2ETests.Drivers;
 
 public class LoyaltyPointsDriver
     {
-        private static string BaseUrl = TestConstants.LoyaltyTestUrl;
+        private static readonly string BaseUrl = TestConstants.LoyaltyTestUrl;
 
-        private readonly HttpClient _httpClient;
-
-        public LoyaltyPointsDriver()
-        {
-            this._httpClient = new HttpClient();
-        }
+        private readonly HttpClient _httpClient = new();
 
         public async Task AddLoyaltyPoints(string customerIdentifier, string orderIdentifier, decimal orderValue)
         {
             var url = $"{BaseUrl}/loyalty";
-            var content = JsonSerializer.Serialize(new AddLoyaltyPointsCommand(){CustomerIdentifier = customerIdentifier, OrderIdentifier = orderIdentifier, OrderValue = orderValue});
+            var content = JsonSerializer.Serialize(new AddLoyaltyPointsCommand {CustomerIdentifier = customerIdentifier, OrderIdentifier = orderIdentifier, OrderValue = orderValue});
             
-            var res = await this._httpClient.PostAsync(new Uri(url), new StringContent(content, Encoding.UTF8, "application/json")).ConfigureAwait(false);
+            var res = await _httpClient.PostAsync(new Uri(url), new StringContent(content, Encoding.UTF8, "application/json")).ConfigureAwait(false);
 
             if (!res.IsSuccessStatusCode)
             {
@@ -32,7 +27,7 @@ public class LoyaltyPointsDriver
         {
             var url = $"{BaseUrl}/loyalty/{customerIdentifier}";
             
-            var getResult = await this._httpClient.GetAsync(new Uri(url)).ConfigureAwait(false);
+            var getResult = await _httpClient.GetAsync(new Uri(url)).ConfigureAwait(false);
 
             return JsonSerializer.Deserialize<LoyaltyPointsDto>(await getResult.Content.ReadAsStringAsync());
         }
@@ -41,8 +36,8 @@ public class LoyaltyPointsDriver
         {
             var url = $"{BaseUrl}/loyalty/spend";
             
-            var content = JsonSerializer.Serialize(new SpendLoyaltyPointsCommand(){CustomerIdentifier = customerIdentifier, OrderIdentifier = orderIdentifier, PointsToSpend = points});
+            var content = JsonSerializer.Serialize(new SpendLoyaltyPointsCommand {CustomerIdentifier = customerIdentifier, OrderIdentifier = orderIdentifier, PointsToSpend = points});
             
-            await this._httpClient.PostAsync(new Uri(url), new StringContent(content, Encoding.UTF8, "application/json")).ConfigureAwait(false);
+            await _httpClient.PostAsync(new Uri(url), new StringContent(content, Encoding.UTF8, "application/json")).ConfigureAwait(false);
         }
     }

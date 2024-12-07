@@ -1,11 +1,7 @@
-using System.Net;
 using System.Threading.Tasks;
 using FluentAssertions;
 using PlantBasedPizza.IntegrationTests.Drivers;
 using TechTalk.SpecFlow;
-using WireMock.RequestBuilders;
-using WireMock.ResponseBuilders;
-using WireMock.Server;
 
 namespace PlantBasedPizza.IntegrationTests.Steps;
 
@@ -13,11 +9,11 @@ namespace PlantBasedPizza.IntegrationTests.Steps;
 public class HealthCheckSteps
 {
     private readonly HealthCheckDriver _driver;
-    private bool loyaltyPointOnline = true;
+    private bool _loyaltyPointOnline = true;
 
     public HealthCheckSteps(ScenarioContext scenarioContext)
     {
-        this._driver = new HealthCheckDriver();
+        _driver = new HealthCheckDriver();
     }
     
     [Given(@"the application is running")]
@@ -29,13 +25,13 @@ public class HealthCheckSteps
     [When(@"the loyalty point service is offline")]
     public void WhenTheLoyaltyPointServiceIsOffline()
     {
-        this.loyaltyPointOnline = false;
+        _loyaltyPointOnline = false;
     }
 
     [Then(@"a (.*) status code is returned")]
     public async Task ThenAStatusCodeIsReturned(int p0)
     {
-        var res = await this._driver.HealthCheck(loyaltyPointOnline);
+        var res = await _driver.HealthCheck(_loyaltyPointOnline);
 
         res.Should().Be(p0);
     }

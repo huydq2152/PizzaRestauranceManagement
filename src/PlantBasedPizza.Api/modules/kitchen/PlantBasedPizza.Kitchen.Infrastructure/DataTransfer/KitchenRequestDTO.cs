@@ -2,22 +2,22 @@ using PlantBasedPizza.Kitchen.Core.Entities;
 
 namespace PlantBasedPizza.Kitchen.Infrastructure.DataTransfer;
 
-public class KitchenRequestDTO
+public class KitchenRequestDto
 {
-    public KitchenRequestDTO()
+    public KitchenRequestDto()
     {
-        this.KitchenRequestId = "";
-        this.OrderIdentifier = "";
+        KitchenRequestId = "";
+        OrderIdentifier = "";
     }
 
-    public KitchenRequestDTO(KitchenRequest request)
+    public KitchenRequestDto(KitchenRequest request)
     {
-        this.KitchenRequestId = request.KitchenRequestId;
-        this.OrderIdentifier = request.OrderIdentifier;
-        this.OrderReceivedOn = request.OrderReceivedOn;
-        this.PrepCompleteOn = request.PrepCompleteOn;
-        this.BakeCompleteOn = request.BakeCompleteOn;
-        this.QualityCheckCompleteOn = request.QualityCheckCompleteOn;
+        KitchenRequestId = request.KitchenRequestId;
+        OrderIdentifier = request.OrderIdentifier;
+        OrderReceivedOn = request.OrderReceivedOn;
+        PrepCompleteOn = request.PrepCompleteOn;
+        BakeCompleteOn = request.BakeCompleteOn;
+        QualityCheckCompleteOn = request.QualityCheckCompleteOn;
     }
 
     public string KitchenRequestId { get; set; }

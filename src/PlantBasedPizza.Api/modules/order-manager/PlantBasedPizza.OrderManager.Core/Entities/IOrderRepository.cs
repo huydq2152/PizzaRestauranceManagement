@@ -1,13 +1,12 @@
-namespace PlantBasedPizza.OrderManager.Core.Entities
+namespace PlantBasedPizza.OrderManager.Core.Entities;
+
+public interface IOrderRepository
 {
-    public interface IOrderRepository
-    {
-        Task Add(Order order);
+    Task Add(Order order);
 
-        Task<Order> Retrieve(string orderIdentifier);
+    Task<Order> Retrieve(string orderIdentifier);
 
-        Task<List<Order>> GetAwaitingCollection();
+    Task<List<Order>> GetAwaitingCollection();
         
-        Task Update(Order order);
-    }
+    Task Update(Order order);
 }

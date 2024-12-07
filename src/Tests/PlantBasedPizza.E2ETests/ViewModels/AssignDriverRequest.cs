@@ -1,13 +1,12 @@
 using Newtonsoft.Json;
 
-namespace PlantBasedPizza.E2ETests.ViewModels
+namespace PlantBasedPizza.E2ETests.ViewModels;
+
+public class AssignDriverRequest
 {
-    public class AssignDriverRequest
-    {
-        [JsonProperty("orderIdentifier")]
-        public string OrderIdentifier { get; set; }
+    [JsonProperty("orderIdentifier")]
+    public string OrderIdentifier { get; set; }
         
-        [JsonProperty("driverName")]
-        public string DriverName { get; set; }
-    }
+    [JsonProperty("driverName")]
+    public string DriverName { get; set; }
 }

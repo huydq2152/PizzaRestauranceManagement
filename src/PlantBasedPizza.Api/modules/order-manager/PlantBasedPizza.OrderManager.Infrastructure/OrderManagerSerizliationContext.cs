@@ -7,6 +7,4 @@ namespace PlantBasedPizza.OrderManager.Infrastructure;
 [JsonSerializable(typeof(OrderHistory))]
 [JsonSerializable(typeof(OrderItem))]
 [JsonSerializable(typeof(DeliveryDetails))]
-public partial class OrderManagerSerializationContext : JsonSerializerContext
-{
-}
+public partial class OrderManagerSerializationContext : JsonSerializerContext;

@@ -1,18 +1,14 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
+namespace PlantBasedPizza.Deliver.Core.Entities;
 
-namespace PlantBasedPizza.Deliver.Core.Entities
+public interface IDeliveryRequestRepository
 {
-    public interface IDeliveryRequestRepository
-    {
-        Task AddNewDeliveryRequest(DeliveryRequest request);
+    Task AddNewDeliveryRequest(DeliveryRequest request);
         
-        Task UpdateDeliveryRequest(DeliveryRequest request);
+    Task UpdateDeliveryRequest(DeliveryRequest request);
 
-        Task<DeliveryRequest?> GetDeliveryStatusForOrder(string orderIdentifier);
+    Task<DeliveryRequest?> GetDeliveryStatusForOrder(string orderIdentifier);
 
-        Task<List<DeliveryRequest>> GetAwaitingDriver();
+    Task<List<DeliveryRequest>> GetAwaitingDriver();
 
-        Task<List<DeliveryRequest>> GetOrdersWithDriver(string driverName);
-    }
+    Task<List<DeliveryRequest>> GetOrdersWithDriver(string driverName);
 }

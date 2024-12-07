@@ -1,5 +1,3 @@
-using System.Diagnostics;
-using Microsoft.Extensions.Diagnostics.HealthChecks;
 using MongoDB.Driver;
 
 using PlantBasedPizza.Deliver.Infrastructure;

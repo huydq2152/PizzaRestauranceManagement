@@ -3,20 +3,13 @@ using PlantBasedPizza.Shared.Logging;
 
 namespace PlantBasedPizza.OrderManager.Core.CreateDeliveryOrder;
 
-public class CreateDeliveryOrderCommandHandler
+public class CreateDeliveryOrderCommandHandler(IOrderRepository orderRepository)
 {
-    private readonly IOrderRepository _orderRepository;
-
-    public CreateDeliveryOrderCommandHandler(IOrderRepository orderRepository)
-    {
-        _orderRepository = orderRepository;
-    }
-
     public async Task<OrderDto?> Handle(CreateDeliveryOrder request)
     {
         try
         {
-            var existingOrder = await _orderRepository.Retrieve(request.OrderIdentifier);
+            await orderRepository.Retrieve(request.OrderIdentifier);
 
             return null;
         }
@@ -33,7 +26,7 @@ public class CreateDeliveryOrderCommandHandler
                 Postcode = request.Postcode
             }, CorrelationContext.GetCorrelationId());
 
-        await _orderRepository.Add(order);
+        await orderRepository.Add(order);
 
         return new OrderDto(order);
     }
