@@ -27,6 +27,7 @@ namespace PlantBasedPizza.Shared
             otel.WithTracing(tracing =>
             {
                 tracing.AddAspNetCoreInstrumentation();
+                tracing.AddGrpcClientInstrumentation();
                 tracing.AddHttpClientInstrumentation();
                 tracing.AddSource(applicationName);
                 tracing.AddOtlpExporter(otlpOptions =>
