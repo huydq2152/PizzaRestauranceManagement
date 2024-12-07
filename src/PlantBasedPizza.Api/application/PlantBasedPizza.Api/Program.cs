@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using MongoDB.Driver;
 
 using PlantBasedPizza.Deliver.Infrastructure;
@@ -8,6 +9,7 @@ using PlantBasedPizza.Recipes.Infrastructure;
 using PlantBasedPizza.Shared;
 using PlantBasedPizza.Shared.Events;
 using PlantBasedPizza.Shared.Logging;
+using HealthCheckResult = PlantBasedPizza.Api.HealthCheckResult;
 
 var builder = WebApplication.CreateBuilder(args);
 builder
@@ -31,29 +33,16 @@ var app = builder.Build();
 
 DomainEvents.Container = app.Services;
 
-var httpClient = app.Services.GetRequiredService<IHttpClientFactory>().CreateClient();
+var orderManagerHealthChecks = app.Services.GetRequiredService<OrderManagerHealthChecks>();
 
 app.Map("/health", async () =>
 {
-    try
+    var healthCheckResult = new HealthCheckResult
     {
-        var res = await httpClient.GetAsync($"{app.Configuration["Services:Loyalty"]}/loyalty/health");
+        OrderManagerHealthCheck = await orderManagerHealthChecks.Check()
+    };
 
-        if (!res.IsSuccessStatusCode)
-        {
-            return Results.Problem("Loyalty points service inactive");
-        }
-
-        Activity.Current?.AddTag("loyalty.healthy", res.IsSuccessStatusCode);
-    }
-    catch (Exception)
-    {
-        Activity.Current?.AddTag("loyalty.healthy", false);
-        
-        return Results.Problem("Loyalty points service inactive");
-    }
-    
-    return Results.Ok("OK");
+    return Results.Ok(healthCheckResult);
 });
 
 app.Use(async (context, next) =>
