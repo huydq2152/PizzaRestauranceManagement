@@ -2,7 +2,7 @@ namespace PlantBasedPizza.Shared.Logging;
 
 public static class CorrelationContext
 {
-    private static readonly AsyncLocal<string> _correlationId = new AsyncLocal<string>();
+    private static readonly AsyncLocal<string> CorrelationId = new AsyncLocal<string>();
 
     private const string __defaultRequestHeaderName = "X-Correlation-ID";
 
@@ -15,16 +15,16 @@ public static class CorrelationContext
             throw new ArgumentException("Correlation Id cannot be null or empty", nameof(correlationId));
         }
 
-        if (!string.IsNullOrWhiteSpace(_correlationId.Value))
+        if (!string.IsNullOrWhiteSpace(CorrelationId.Value))
         {
             throw new InvalidOperationException("Correlation Id is already set for the context");
         }
 
-        _correlationId.Value = correlationId;
+        CorrelationId.Value = correlationId;
     }
 
     public static string GetCorrelationId()
     {
-        return _correlationId.Value ?? string.Empty;
+        return CorrelationId.Value ?? string.Empty;
     }
 }

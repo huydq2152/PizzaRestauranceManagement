@@ -1,29 +1,19 @@
-using System;
 using PlantBasedPizza.Shared.Events;
 using PlantBasedPizza.Shared.Logging;
 
-namespace PlantBasedPizza.Events
+namespace PlantBasedPizza.Events;
+
+public class OrderCompletedEvent(string orderIdentifier) : IDomainEvent
 {
-    public class OrderCompletedEvent : IDomainEvent
-    {
-        private readonly string _eventId;
+    private readonly string _eventId = Guid.NewGuid().ToString();
 
-        public OrderCompletedEvent(string orderIdentifier)
-        {
-            this._eventId = Guid.NewGuid().ToString();
-            this.EventDate = DateTime.Now;
-            this.OrderIdentifier = orderIdentifier;
-            this.CorrelationId = CorrelationContext.GetCorrelationId();
-        }
+    public string OrderIdentifier { get; private set; } = orderIdentifier;
 
-        public string OrderIdentifier { get; private set; }
-        
-        public string EventName => "order-manager.order-completed";
-        public string EventVersion => "v1";
+    public string EventName => "order-manager.order-completed";
+    public string EventVersion => "v1";
 
-        public string EventId => this._eventId;
+    public string EventId => this._eventId;
 
-        public DateTime EventDate { get; }
-        public string CorrelationId { get; set; }
-    }
+    public DateTime EventDate { get; } = DateTime.Now;
+    public string CorrelationId { get; set; } = CorrelationContext.GetCorrelationId();
 }

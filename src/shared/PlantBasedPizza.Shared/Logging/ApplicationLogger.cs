@@ -1,9 +1,7 @@
-using System;
 using Serilog;
 using Serilog.Context;
 using Serilog.Core;
 using Serilog.Events;
-using Serilog.Formatting.Compact;
 using Serilog.Formatting.Json;
 
 namespace PlantBasedPizza.Shared.Logging
@@ -31,7 +29,7 @@ namespace PlantBasedPizza.Shared.Logging
         {
             if (_logger == null)
             {
-                ApplicationLogger.Init();
+                Init();
             }
             using (LogContext.PushProperty("CorrelationId", CorrelationContext.GetCorrelationId()))
                 _logger?.Information(message);
@@ -41,7 +39,7 @@ namespace PlantBasedPizza.Shared.Logging
         {
             if (_logger == null)
             {
-                ApplicationLogger.Init();
+                Init();
             }
             
             using (LogContext.PushProperty("CorrelationId", CorrelationContext.GetCorrelationId()))
@@ -52,7 +50,7 @@ namespace PlantBasedPizza.Shared.Logging
         {
             if (_logger == null)
             {
-                ApplicationLogger.Init();
+                Init();
             }
             
             using (LogContext.PushProperty("CorrelationId", CorrelationContext.GetCorrelationId()))
@@ -63,7 +61,7 @@ namespace PlantBasedPizza.Shared.Logging
         {
             if (_logger == null)
             {
-                ApplicationLogger.Init();
+                Init();
             }
             
             using (LogContext.PushProperty("CorrelationId", CorrelationContext.GetCorrelationId()))

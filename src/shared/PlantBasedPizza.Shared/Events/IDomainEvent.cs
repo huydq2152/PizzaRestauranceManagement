@@ -1,17 +1,14 @@
-using System;
+namespace PlantBasedPizza.Shared.Events;
 
-namespace PlantBasedPizza.Shared.Events
+public interface IDomainEvent
 {
-    public interface IDomainEvent
-    {
-        string EventName { get; }
+    string EventName { get; }
         
-        string EventVersion { get; }
+    string EventVersion { get; }
         
-        string EventId { get; }
+    string EventId { get; }
         
-        DateTime EventDate { get; }
+    DateTime EventDate { get; }
         
-        string CorrelationId { get; set; }
-    }
+    string CorrelationId { get; set; }
 }

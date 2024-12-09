@@ -1,23 +1,20 @@
-using System;
+namespace PlantBasedPizza.Shared.Guards;
 
-namespace PlantBasedPizza.Shared.Guards
+public static class Guard
 {
-    public static class Guard
+    public static void AgainstNullOrEmpty(string input, string paramName)
     {
-        public static void AgainstNullOrEmpty(string input, string paramName)
+        if (string.IsNullOrEmpty(input))
         {
-            if (string.IsNullOrEmpty(input))
-            {
-                throw new ArgumentNullException(paramName);
-            }
+            throw new ArgumentNullException(paramName);
         }
+    }
         
-        public static void AgainstNull(object input, string paramName)
+    public static void AgainstNull(object input, string paramName)
+    {
+        if (input == null)
         {
-            if (input == null)
-            {
-                throw new ArgumentNullException(paramName);
-            }
+            throw new ArgumentNullException(paramName);
         }
     }
 }

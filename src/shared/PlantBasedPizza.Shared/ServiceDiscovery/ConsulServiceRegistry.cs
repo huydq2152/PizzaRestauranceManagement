@@ -7,7 +7,7 @@ namespace PlantBasedPizza.Shared.ServiceDiscovery;
 public class ConsulServiceRegistry(IConsulClient consulClient, ILogger<ConsulServiceRegistry> logger)
     : IServiceRegistry
 {
-    public async Task<string> GetServiceAddress(string serviceName)
+    public async Task<string?> GetServiceAddress(string serviceName)
     {
         var services = await consulClient.Health.Service(serviceName);
         
