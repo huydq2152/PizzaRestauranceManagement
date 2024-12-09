@@ -117,6 +117,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "stubs", "stubs", "{A36A84A7
 		src\PlantBasedPizza.Api\mocks\grpc-mocks\stubs\payment-stub.json = src\PlantBasedPizza.Api\mocks\grpc-mocks\stubs\payment-stub.json
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlantBasedPizza.Shared.UnitTests", "src\Shared\PlantBasedPizza.Shared.UnitTests\PlantBasedPizza.Shared.UnitTests.csproj", "{E4118862-2FDF-4ED2-BF9E-E2667E9094C4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -207,6 +209,10 @@ Global
 		{32F9E727-117F-4917-A53E-6580DA5409ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{32F9E727-117F-4917-A53E-6580DA5409ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{32F9E727-117F-4917-A53E-6580DA5409ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4118862-2FDF-4ED2-BF9E-E2667E9094C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4118862-2FDF-4ED2-BF9E-E2667E9094C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4118862-2FDF-4ED2-BF9E-E2667E9094C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4118862-2FDF-4ED2-BF9E-E2667E9094C4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -253,5 +259,6 @@ Global
 		{32F9E727-117F-4917-A53E-6580DA5409ED} = {0CC60E02-EF4C-44BE-8BF2-FDE3A04EC36E}
 		{ECFC9D10-B0F2-43C9-BCAD-86B9B561C23F} = {0E8F0507-7C0C-4B8C-A857-8DFC192D98DA}
 		{A36A84A7-7A64-4201-BB6D-2319D50C3283} = {ECFC9D10-B0F2-43C9-BCAD-86B9B561C23F}
+		{E4118862-2FDF-4ED2-BF9E-E2667E9094C4} = {A57E8457-0DAF-4A55-AFCF-D408D28046B4}
 	EndGlobalSection
 EndGlobal
