@@ -2,15 +2,17 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 
     <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FakeItEasy" Version="8.1.0" />
     <PackageReference Include="FluentAssertions" Version="6.12.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.9.0" />
-    <PackageReference Include="Moq" Version="4.20.70" />
     <PackageReference Include="NetArchTest.Rules" Version="1.3.2" />
     <PackageReference Include="xunit" Version="2.7.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.5.7">
@@ -24,11 +26,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\PlantBasedPizza.Deliver\application\PlantBasedPizza.Deliver.Core\PlantBasedPizza.Deliver.Core.csproj" />
-    <ProjectReference Include="..\..\..\PlantBasedPizza.Kitchen\application\PlantBasedPizza.Kitchen.Core\PlantBasedPizza.Kitchen.Core.csproj" />
-    <ProjectReference Include="..\..\..\PlantBasedPizza.LoyaltyPoint\application\PlantBasedPizza.LoyaltyPoints\PlantBasedPizza.LoyaltyPoints.csproj" />
-    <ProjectReference Include="..\..\..\PlantBasedPizza.Order\application\PlantBasedPizza.Order.Core\PlantBasedPizza.Order.Core.csproj" />
-    <ProjectReference Include="..\..\..\PlantBasedPizza.Recipe\application\PlantBasedPizza.Recipes.Core\PlantBasedPizza.Recipes.Core.csproj" />
+    <ProjectReference Include="..\..\application\PlantBasedPizza.LoyaltyPoints.Shared\PlantBasedPizza.LoyaltyPoints.Shared.csproj" />
+    <ProjectReference Include="..\..\application\PlantBasedPizza.LoyaltyPoints\PlantBasedPizza.LoyaltyPoints.csproj" />
   </ItemGroup>
 
 </Project>

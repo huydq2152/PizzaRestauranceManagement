@@ -1,8 +1,7 @@
 using MongoDB.Driver;
-
 using PlantBasedPizza.Deliver.Infrastructure;
 using PlantBasedPizza.Kitchen.Infrastructure;
-using PlantBasedPizza.OrderManager.Infrastructure;
+using PlantBasedPizza.Order.Infrastructure;
 using PlantBasedPizza.Recipes.Infrastructure;
 using PlantBasedPizza.Shared;
 using PlantBasedPizza.Shared.Events;

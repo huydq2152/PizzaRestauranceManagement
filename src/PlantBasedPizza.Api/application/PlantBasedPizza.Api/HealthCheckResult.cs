@@ -1,4 +1,4 @@
-using PlantBasedPizza.OrderManager.Infrastructure;
+using PlantBasedPizza.Order.Infrastructure;
 
 namespace PlantBasedPizza.Api;
 

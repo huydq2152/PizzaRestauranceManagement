@@ -3,7 +3,6 @@ using FluentAssertions;
 using NetArchTest.Rules;
 using PlantBasedPizza.Deliver.Core.Entities;
 using PlantBasedPizza.Kitchen.Core.Entities;
-using PlantBasedPizza.OrderManager.Core.Entities;
 using PlantBasedPizza.Recipes.Core.Entities;
 using Xunit;
 
@@ -26,7 +25,7 @@ public class DependencyTests
 
         foreach (var namespaceToCheck in namespacesToCheck)
         {
-            Types.InAssembly(typeof(Order).Assembly)
+            Types.InAssembly(typeof(Order.Core.Entities.Order).Assembly)
                 .ShouldNot()
                 .HaveDependencyOn(namespaceToCheck)
                 .GetResult().IsSuccessful.Should().BeTrue($"{namespaceToCheck} cannot be referenced.");   
@@ -39,8 +38,8 @@ public class DependencyTests
         {
             "PlantBasedPizza.Recipes.Core",
             "PlantBasedPizza.Recipes.Infrastructure",
-            "PlantBasedPizza.OrderManager.Core",
-            "PlantBasedPizza.OrderManager.Infrastructure",
+            "PlantBasedPizza.Order.Core",
+            "PlantBasedPizza.Order.Infrastructure",
             "PlantBasedPizza.Deliver.Core",
             "PlantBasedPizza.Deliver.Infrastructure",
         };
@@ -59,8 +58,8 @@ public class DependencyTests
     {
         var namespacesToCheck = new List<string>(6)
         {
-            "PlantBasedPizza.OrderManager.Core",
-            "PlantBasedPizza.OrderManager.Infrastructure",
+            "PlantBasedPizza.Order.Core",
+            "PlantBasedPizza.Order.Infrastructure",
             "PlantBasedPizza.Kitchen.Core",
             "PlantBasedPizza.Kitchen.Infrastructure",
             "PlantBasedPizza.Deliver.Core",
@@ -84,8 +83,8 @@ public class DependencyTests
             "PlantBasedPizza.Recipes.Infrastructure",
             "PlantBasedPizza.Kitchen.Core",
             "PlantBasedPizza.Kitchen.Infrastructure",
-            "PlantBasedPizza.OrderManager.Core",
-            "PlantBasedPizza.OrderManager.Infrastructure",
+            "PlantBasedPizza.Order.Core",
+            "PlantBasedPizza.Order.Infrastructure",
         };
 
         foreach (var namespaceToCheck in namespacesToCheck)
