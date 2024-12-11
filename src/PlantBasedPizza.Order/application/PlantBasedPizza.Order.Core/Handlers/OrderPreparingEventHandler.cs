@@ -1,14 +1,14 @@
 using Microsoft.Extensions.Logging;
 using PlantBasedPizza.Events;
+using PlantBasedPizza.Events.IntegrationEvents;
 using PlantBasedPizza.Order.Core.Entities;
-using PlantBasedPizza.Shared.Events;
 using Saunter.Attributes;
 
 namespace PlantBasedPizza.Order.Core.Handlers;
 
 [AsyncApi]
 public class OrderPreparingEventHandler(IOrderRepository orderRepository, ILogger<OrderPreparingEventHandler> logger)
-    : Handles<OrderPreparingEvent>
+    : IHandles<OrderPreparingEvent>
 {
     [Channel("kitchen.prep-started")] // Creates a Channel
     [SubscribeOperation(typeof(OrderPreparingEvent), Summary = "Handle an order prep started event.", OperationId = "kitchen.prep-started")]

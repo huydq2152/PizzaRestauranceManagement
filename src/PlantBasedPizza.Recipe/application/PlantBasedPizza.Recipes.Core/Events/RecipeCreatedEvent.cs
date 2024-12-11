@@ -1,5 +1,5 @@
+using PlantBasedPizza.Events;
 using PlantBasedPizza.Recipes.Core.Entities;
-using PlantBasedPizza.Shared.Events;
 
 namespace PlantBasedPizza.Recipes.Core.Events
 {

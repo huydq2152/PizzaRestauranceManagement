@@ -1,7 +1,6 @@
-using PlantBasedPizza.Shared.Events;
 using PlantBasedPizza.Shared.Logging;
 
-namespace PlantBasedPizza.Events;
+namespace PlantBasedPizza.Events.IntegrationEvents;
 
 public class OrderQualityCheckedEvent(string orderIdentifier) : IDomainEvent
 {

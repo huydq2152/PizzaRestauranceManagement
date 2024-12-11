@@ -11,9 +11,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CloudNative.CloudEvents" Version="2.7.1" />
-    <PackageReference Include="CloudNative.CloudEvents.AspNetCore" Version="2.7.1" />
-    <PackageReference Include="CloudNative.CloudEvents.NewtonsoftJson" Version="2.7.1" />
+    <PackageReference Include="CloudNative.CloudEvents" Version="2.8.0" />
+    <PackageReference Include="CloudNative.CloudEvents.AspNetCore" Version="2.8.0" />
+    <PackageReference Include="CloudNative.CloudEvents.NewtonsoftJson" Version="2.8.0" />
+    <PackageReference Include="CloudNative.CloudEvents.SystemTextJson" Version="2.8.0" />
+    <PackageReference Include="RabbitMQ.Client" Version="7.0.0" />
     <PackageReference Include="Saunter" Version="0.13.0" />
   </ItemGroup>
 

@@ -5,7 +5,7 @@ using Moq;
 using PlantBasedPizza.Deliver.Core.Entities;
 using PlantBasedPizza.Deliver.Core.Handlers;
 using PlantBasedPizza.Events;
-using PlantBasedPizza.Shared.Events;
+using PlantBasedPizza.Events.IntegrationEvents;
 using PlantBasedPizza.Shared.Logging;
 using Xunit;
 

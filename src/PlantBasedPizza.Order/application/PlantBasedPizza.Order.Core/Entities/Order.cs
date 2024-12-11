@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 using PlantBasedPizza.Events;
-using PlantBasedPizza.Shared.Events;
+using PlantBasedPizza.Events.IntegrationEvents;
 using PlantBasedPizza.Shared.Guards;
 using PlantBasedPizza.Shared.Logging;
 

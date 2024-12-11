@@ -4,7 +4,7 @@ using PlantBasedPizza.Deliver.Core.Entities;
 using PlantBasedPizza.Deliver.Core.GetDelivery;
 using PlantBasedPizza.Deliver.Core.Handlers;
 using PlantBasedPizza.Events;
-using PlantBasedPizza.Shared.Events;
+using PlantBasedPizza.Events.IntegrationEvents;
 
 namespace PlantBasedPizza.Deliver.Infrastructure;
 
@@ -30,7 +30,7 @@ public static class Setup
         });
             
         services.AddSingleton<IDeliveryRequestRepository, DeliveryRequestRepository>();
-        services.AddSingleton<Handles<OrderReadyForDeliveryEvent>, OrderReadyForDeliveryEventHandler>();
+        services.AddSingleton<IHandles<OrderReadyForDeliveryEvent>, OrderReadyForDeliveryEventHandler>();
         services.AddSingleton<GetDeliveryQueryHandler>();
 
         return services;

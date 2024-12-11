@@ -1,10 +1,10 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PlantBasedPizza.Events;
+using PlantBasedPizza.Events.IntegrationEvents;
 using PlantBasedPizza.Kitchen.Core.Entities;
 using PlantBasedPizza.Kitchen.Core.Handlers;
 using PlantBasedPizza.Kitchen.Core.Services;
-using PlantBasedPizza.Shared.Events;
 
 namespace PlantBasedPizza.Kitchen.Infrastructure;
 
@@ -24,7 +24,7 @@ public static class Setup
             
         services.AddSingleton<IRecipeService, RecipeService>();
         services.AddSingleton<IOrderManagerService, OrderManagerService>();
-        services.AddSingleton<Handles<OrderSubmittedEvent>, OrderSubmittedEventHandler>();
+        services.AddSingleton<IHandles<OrderSubmittedEvent>, OrderSubmittedEventHandler>();
         services.AddSingleton<IKitchenRequestRepository, KitchenRequestRepository>();
 
         return services;

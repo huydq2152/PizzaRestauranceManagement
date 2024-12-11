@@ -1,6 +1,6 @@
 using PlantBasedPizza.Deliver.Core.Entities;
 using PlantBasedPizza.Events;
-using PlantBasedPizza.Shared.Events;
+using PlantBasedPizza.Events.IntegrationEvents;
 using PlantBasedPizza.Shared.Logging;
 using Saunter.Attributes;
 
@@ -10,7 +10,7 @@ namespace PlantBasedPizza.Deliver.Core.Handlers;
 public class OrderReadyForDeliveryEventHandler(
     IDeliveryRequestRepository deliveryRequestRepository,
     IObservabilityService logger)
-    : Handles<OrderReadyForDeliveryEvent>
+    : IHandles<OrderReadyForDeliveryEvent>
 {
     [Channel("order-manager.ready-for-delivery")] // Creates a Channel
     [SubscribeOperation(typeof(OrderReadyForDeliveryEvent), Summary = "Handle an order ready for delivery event.", OperationId = "order-manager.ready-for-delivery")]

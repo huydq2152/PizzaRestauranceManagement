@@ -1,12 +1,12 @@
 using PlantBasedPizza.Events;
+using PlantBasedPizza.Events.IntegrationEvents;
 using PlantBasedPizza.Order.Core.Entities;
-using PlantBasedPizza.Shared.Events;
 using Saunter.Attributes;
 
 namespace PlantBasedPizza.Order.Core.Handlers;
 
 [AsyncApi("OrderManager")]
-public class DriverCollectedOrderEventHandler(IOrderRepository orderRepository) : Handles<DriverCollectedOrderEvent>
+public class DriverCollectedOrderEventHandler(IOrderRepository orderRepository) : IHandles<DriverCollectedOrderEvent>
 {
     [Channel("delivery.driver-collected")] // Creates a Channel
     [SubscribeOperation(typeof(DriverCollectedOrderEvent), Summary = "Handle a driver order collected event.", OperationId = "delivery.driver-collected")]

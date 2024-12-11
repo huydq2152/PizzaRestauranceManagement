@@ -1,11 +1,10 @@
-using PlantBasedPizza.Shared.Events;
 using PlantBasedPizza.Shared.Logging;
 
-namespace PlantBasedPizza.Events;
+namespace PlantBasedPizza.Events.IntegrationEvents;
 
-public class OrderPreparingEvent(string orderIdentifier) : IDomainEvent
+public class OrderDeliveredEvent(string orderIdentifier) : IDomainEvent
 {
-    public string EventName => "kitchen.prep-started";
+    public string EventName => "delivery.order-delivered";
         
     public string EventVersion => "v1";
         

@@ -1,10 +1,10 @@
 using MongoDB.Driver;
 using PlantBasedPizza.Deliver.Infrastructure;
+using PlantBasedPizza.Events;
 using PlantBasedPizza.Kitchen.Infrastructure;
 using PlantBasedPizza.Order.Infrastructure;
 using PlantBasedPizza.Recipes.Infrastructure;
 using PlantBasedPizza.Shared;
-using PlantBasedPizza.Shared.Events;
 using PlantBasedPizza.Shared.Logging;
 using HealthCheckResult = PlantBasedPizza.Api.HealthCheckResult;
 

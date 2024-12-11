@@ -1,7 +1,7 @@
 using PlantBasedPizza.Events;
+using PlantBasedPizza.Events.IntegrationEvents;
 using PlantBasedPizza.Order.Core.Entities;
 using PlantBasedPizza.Order.Core.Services;
-using PlantBasedPizza.Shared.Events;
 using Saunter.Attributes;
 
 namespace PlantBasedPizza.Order.Core.Handlers;
@@ -10,7 +10,7 @@ namespace PlantBasedPizza.Order.Core.Handlers;
 public class DriverDeliveredOrderEventHandler(
     IOrderRepository orderRepository,
     ILoyaltyPointService loyaltyPointService)
-    : Handles<OrderDeliveredEvent>
+    : IHandles<OrderDeliveredEvent>
 {
     [Channel("delivery.order-delivered")] // Creates a Channel
     [SubscribeOperation(typeof(OrderDeliveredEvent), Summary = "Handle an order delivered event.", OperationId = "delivery.order-delivered")]

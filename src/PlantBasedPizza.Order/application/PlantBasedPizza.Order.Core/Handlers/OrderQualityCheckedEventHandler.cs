@@ -1,12 +1,12 @@
 using PlantBasedPizza.Events;
+using PlantBasedPizza.Events.IntegrationEvents;
 using PlantBasedPizza.Order.Core.Entities;
-using PlantBasedPizza.Shared.Events;
 using Saunter.Attributes;
 
 namespace PlantBasedPizza.Order.Core.Handlers;
 
 [AsyncApi]
-public class OrderQualityCheckedEventHandler(IOrderRepository orderRepository) : Handles<OrderQualityCheckedEvent>
+public class OrderQualityCheckedEventHandler(IOrderRepository orderRepository) : IHandles<OrderQualityCheckedEvent>
 {
     [Channel("kitchen.quality-checked")] // Creates a Channel
     [SubscribeOperation(typeof(OrderQualityCheckedEvent), Summary = "Handle an order quality event.", OperationId = "kitchen.quality-checked")]

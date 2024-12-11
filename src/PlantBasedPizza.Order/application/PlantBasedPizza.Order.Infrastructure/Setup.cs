@@ -3,6 +3,7 @@ using Grpc.Net.Client.Configuration;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PlantBasedPizza.Events;
+using PlantBasedPizza.Events.IntegrationEvents;
 using PlantBasedPizza.Order.Core.AddItemToOrder;
 using PlantBasedPizza.Order.Core.CollectOrder;
 using PlantBasedPizza.Order.Core.CreateDeliveryOrder;
@@ -11,7 +12,6 @@ using PlantBasedPizza.Order.Core.Entities;
 using PlantBasedPizza.Order.Core.Handlers;
 using PlantBasedPizza.Order.Core.Services;
 using PlantBasedPizza.OrderManager.Infrastructure;
-using PlantBasedPizza.Shared.Events;
 using PlantBasedPizza.Shared.ServiceDiscovery;
 using Polly;
 using Polly.Contrib.WaitAndRetry;
@@ -59,12 +59,12 @@ public static class Setup
         services.AddSingleton<IRecipeService, RecipeService>();
         services.AddSingleton<ILoyaltyPointService, LoyaltyPointService>();
 
-        services.AddSingleton<Handles<OrderPreparingEvent>, OrderPreparingEventHandler>();
-        services.AddSingleton<Handles<OrderPrepCompleteEvent>, OrderPrepCompleteEventHandler>();
-        services.AddSingleton<Handles<OrderBakedEvent>, OrderBakedEventHandler>();
-        services.AddSingleton<Handles<OrderQualityCheckedEvent>, OrderQualityCheckedEventHandler>();
-        services.AddSingleton<Handles<OrderDeliveredEvent>, DriverDeliveredOrderEventHandler>();
-        services.AddSingleton<Handles<DriverCollectedOrderEvent>, DriverCollectedOrderEventHandler>();
+        services.AddSingleton<IHandles<OrderPreparingEvent>, OrderPreparingEventHandler>();
+        services.AddSingleton<IHandles<OrderPrepCompleteEvent>, OrderPrepCompleteEventHandler>();
+        services.AddSingleton<IHandles<OrderBakedEvent>, OrderBakedEventHandler>();
+        services.AddSingleton<IHandles<OrderQualityCheckedEvent>, OrderQualityCheckedEventHandler>();
+        services.AddSingleton<IHandles<OrderDeliveredEvent>, DriverDeliveredOrderEventHandler>();
+        services.AddSingleton<IHandles<DriverCollectedOrderEvent>, DriverCollectedOrderEventHandler>();
 
         services.AddSingleton<OrderManagerHealthChecks>();
         services.AddHttpClient<OrderManagerHealthChecks>()

@@ -1,11 +1,12 @@
-using PlantBasedPizza.Shared.Events;
 using PlantBasedPizza.Shared.Logging;
+using Saunter.Attributes;
 
-namespace PlantBasedPizza.Events;
+namespace PlantBasedPizza.Events.IntegrationEvents;
 
-public class DriverCollectedOrderEvent(string orderIdentifier, string driverName) : IDomainEvent
+[AsyncApi]
+public class OrderBakedEvent(string orderIdentifier) : IDomainEvent
 {
-    public string EventName => "delivery.driver-collected";
+    public string EventName => "kitchen.baked";
         
     public string EventVersion => "v1";
         
@@ -15,6 +16,4 @@ public class DriverCollectedOrderEvent(string orderIdentifier, string driverName
     public string CorrelationId { get; set; } = CorrelationContext.GetCorrelationId();
 
     public string OrderIdentifier { get; private set; } = orderIdentifier;
-
-    public string DriverName { get; private set; } = driverName;
 }

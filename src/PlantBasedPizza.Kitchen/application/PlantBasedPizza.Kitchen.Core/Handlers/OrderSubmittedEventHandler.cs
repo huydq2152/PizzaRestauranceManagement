@@ -1,8 +1,8 @@
 using PlantBasedPizza.Events;
+using PlantBasedPizza.Events.IntegrationEvents;
 using PlantBasedPizza.Kitchen.Core.Adapters;
 using PlantBasedPizza.Kitchen.Core.Entities;
 using PlantBasedPizza.Kitchen.Core.Services;
-using PlantBasedPizza.Shared.Events;
 using PlantBasedPizza.Shared.Guards;
 using PlantBasedPizza.Shared.Logging;
 using Saunter.Attributes;
@@ -15,7 +15,7 @@ public class OrderSubmittedEventHandler(
     IRecipeService recipeService,
     IObservabilityService logger,
     IOrderManagerService orderManagerService)
-    : Handles<OrderSubmittedEvent>
+    : IHandles<OrderSubmittedEvent>
 {
     [Channel("order-manager.order-submitted")] // Creates a Channel
     [SubscribeOperation(typeof(OrderSubmittedEvent), Summary = "Handle an order submitted event.", OperationId = "order-manager.order-submitted")]

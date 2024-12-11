@@ -1,8 +1,6 @@
-using System;
-using PlantBasedPizza.Shared.Events;
 using PlantBasedPizza.Shared.Logging;
 
-namespace PlantBasedPizza.Events
+namespace PlantBasedPizza.Events.IntegrationEvents
 {
     public class OrderPrepCompleteEvent(string orderIdentifier) : IDomainEvent
     {
