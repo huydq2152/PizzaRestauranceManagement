@@ -141,6 +141,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlantBasedPizza.Recipes.Cor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlantBasedPizza.Recipes.Infrastructure", "src\PlantBasedPizza.Recipe\application\PlantBasedPizza.Recipes.Infrastructure\PlantBasedPizza.Recipes.Infrastructure.csproj", "{5FEE3E08-7781-49CA-8FE1-E31F5480FDC7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlantBasedPizza.LoyaltyPoints.Worker", "src\PlantBasedPizza.LoyaltyPoint\application\PlantBasedPizza.LoyaltyPoints.Worker\PlantBasedPizza.LoyaltyPoints.Worker.csproj", "{110AC7B7-71D4-467F-B5F3-783DE238CBEA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -235,6 +237,10 @@ Global
 		{5FEE3E08-7781-49CA-8FE1-E31F5480FDC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5FEE3E08-7781-49CA-8FE1-E31F5480FDC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5FEE3E08-7781-49CA-8FE1-E31F5480FDC7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{110AC7B7-71D4-467F-B5F3-783DE238CBEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{110AC7B7-71D4-467F-B5F3-783DE238CBEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{110AC7B7-71D4-467F-B5F3-783DE238CBEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{110AC7B7-71D4-467F-B5F3-783DE238CBEA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -293,5 +299,6 @@ Global
 		{077DC59F-4BAA-4F74-B6B4-9E357B3EB1B7} = {C7F6E63C-5065-4AE1-86B2-C62051530E5D}
 		{4B291C53-1DB2-4410-9525-92496CEB492A} = {2EDDA31F-5812-4741-885B-7B73F9B863F1}
 		{5FEE3E08-7781-49CA-8FE1-E31F5480FDC7} = {2EDDA31F-5812-4741-885B-7B73F9B863F1}
+		{110AC7B7-71D4-467F-B5F3-783DE238CBEA} = {87435669-0B21-4173-A6C0-B72D010BE321}
 	EndGlobalSection
 EndGlobal

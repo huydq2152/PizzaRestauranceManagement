@@ -11,6 +11,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\..\..\PlantBasedPizza.Shared\application\PlantBasedPizza.Events\PlantBasedPizza.Events.csproj" />
         <ProjectReference Include="..\..\..\PlantBasedPizza.Shared\application\PlantBasedPizza.Shared\PlantBasedPizza.Shared.csproj" />
     </ItemGroup>
 

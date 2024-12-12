@@ -8,6 +8,7 @@ package loyalty;
 service Loyalty {
   // Sends a greeting
   rpc AddLoyaltyPoints (AddLoyaltyPointsRequest) returns (AddLoyaltyPointsReply);
+  rpc GetCustomerLoyaltyPoints (GetCustomerLoyaltyPointsRequest) returns (GetCustomerLoyaltyPointsReply);
 }
 
 message AddLoyaltyPointsRequest {
@@ -17,6 +18,15 @@ message AddLoyaltyPointsRequest {
 }
 
 message AddLoyaltyPointsReply {
+  string customerIdentifier = 1;
+  double totalPoints = 2;
+}
+
+message GetCustomerLoyaltyPointsRequest {
+  string customerIdentifier = 1;
+}
+
+message GetCustomerLoyaltyPointsReply {
   string customerIdentifier = 1;
   double totalPoints = 2;
 }

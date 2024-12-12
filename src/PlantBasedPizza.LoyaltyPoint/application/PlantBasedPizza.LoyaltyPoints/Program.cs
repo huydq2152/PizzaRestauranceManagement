@@ -1,8 +1,8 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson.Serialization;
-using MongoDB.Driver;
 using PlantBasedPizza.LoyaltyPoints;
+using PlantBasedPizza.LoyaltyPoints.Shared;
 using PlantBasedPizza.LoyaltyPoints.Shared.Adapters;
 using PlantBasedPizza.LoyaltyPoints.Shared.Core;
 using PlantBasedPizza.Shared;
@@ -10,9 +10,7 @@ using PlantBasedPizza.Shared;
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddEnvironmentVariables();
 
-var client = new MongoClient(builder.Configuration["DatabaseConnection"]);
-
-builder.Services.AddSingleton(client);
+builder.Services.AddLoyaltyServices(builder.Configuration, "LoyaltyPointsAPI");
 
 builder.Services.AddSingleton<ICustomerLoyaltyPointsRepository, CustomerLoyaltyPointRepository>();
 builder.Services.AddSingleton<AddLoyaltyPointsCommandHandler>();

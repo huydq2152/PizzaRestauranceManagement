@@ -1,3 +1,4 @@
+using PlantBasedPizza.Events;
 using PlantBasedPizza.Payments.Services;
 using PlantBasedPizza.Shared;
 
@@ -6,7 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddGrpc();
 
-builder.Services.AddSharedInfrastructure(builder.Configuration, "Payments");
+builder.Services.AddSharedInfrastructure(builder.Configuration, "Payments")
+    .AddMessaging(builder.Configuration);
 
 var app = builder.Build();
 
