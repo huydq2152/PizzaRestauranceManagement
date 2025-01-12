@@ -113,9 +113,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "application", "application"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{9CE30B48-9A61-4C31-891F-A36161282CA4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlantBasedPizza.Deliver.Core", "src\PlantBasedPizza.Deliver\application\PlantBasedPizza.Deliver.Core\PlantBasedPizza.Deliver.Core.csproj", "{F25F535A-C052-4BD8-A2BB-A6DD2F343E7B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlantBasedPizza.Delivery.Core", "src\PlantBasedPizza.Deliver\application\PlantBasedPizza.Delivery.Core\PlantBasedPizza.Delivery.Core.csproj", "{F25F535A-C052-4BD8-A2BB-A6DD2F343E7B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlantBasedPizza.Deliver.Infrastructure", "src\PlantBasedPizza.Deliver\application\PlantBasedPizza.Deliver.Infrastructure\PlantBasedPizza.Deliver.Infrastructure.csproj", "{97D64881-C2FB-492F-991C-871459344B83}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlantBasedPizza.Delivery.Infrastructure", "src\PlantBasedPizza.Deliver\application\PlantBasedPizza.Delivery.Infrastructure\PlantBasedPizza.Delivery.Infrastructure.csproj", "{97D64881-C2FB-492F-991C-871459344B83}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "application", "application", "{D281EF5C-BD32-49E8-9395-D74FCAA5127E}"
 EndProject
@@ -142,6 +142,22 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlantBasedPizza.Recipes.Infrastructure", "src\PlantBasedPizza.Recipe\application\PlantBasedPizza.Recipes.Infrastructure\PlantBasedPizza.Recipes.Infrastructure.csproj", "{5FEE3E08-7781-49CA-8FE1-E31F5480FDC7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlantBasedPizza.LoyaltyPoints.Worker", "src\PlantBasedPizza.LoyaltyPoint\application\PlantBasedPizza.LoyaltyPoints.Worker\PlantBasedPizza.LoyaltyPoints.Worker.csproj", "{110AC7B7-71D4-467F-B5F3-783DE238CBEA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlantBasedPizza.Orders.Api", "src\PlantBasedPizza.Order\application\PlantBasedPizza.Orders.Api\PlantBasedPizza.Orders.Api.csproj", "{769EBB9C-A3BB-4BAD-AF13-3B31EF70410D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlantBasedPizza.Orders.Worker", "src\PlantBasedPizza.Order\application\PlantBasedPizza.Orders.Worker\PlantBasedPizza.Orders.Worker.csproj", "{C6CC749A-3A9F-4E4C-AF73-B0F7A9D60055}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlantBasedPizza.Delivery.IntegrationTests", "src\PlantBasedPizza.Deliver\tests\PlantBasedPizza.Delivery.IntegrationTests\PlantBasedPizza.Delivery.IntegrationTests.csproj", "{A3391D49-9587-4864-9A26-877B8C7B16A8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlantBasedPizza.Delivery.UnitTests", "src\PlantBasedPizza.Deliver\tests\PlantBasedPizza.Delivery.UnitTests\PlantBasedPizza.Delivery.UnitTests.csproj", "{809B7A3B-D97C-41D5-BAF5-A364F8EAA67A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlantBasedPizza.Delivery.Api", "src\PlantBasedPizza.Deliver\application\PlantBasedPizza.Delivery.Api\PlantBasedPizza.Delivery.Api.csproj", "{38ABA668-4866-4728-B9F7-1D6596AF8985}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlantBasedPizza.Delivery.Worker", "src\PlantBasedPizza.Deliver\application\PlantBasedPizza.Delivery.Worker\PlantBasedPizza.Delivery.Worker.csproj", "{8C6F4B67-3371-48DA-8BDF-CFEFC0A063ED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlantBasedPizza.Kitchen.Worker", "src\PlantBasedPizza.Kitchen\application\PlantBasedPizza.Kitchen.Worker\PlantBasedPizza.Kitchen.Worker.csproj", "{13658C36-B992-4A9E-BD19-294613D58C64}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlantBasedPizza.Kitchen.Api", "src\PlantBasedPizza.Kitchen\application\PlantBasedPizza.Kitchen.Api\PlantBasedPizza.Kitchen.Api.csproj", "{4CFF090E-EBE5-47CC-BC2C-2A4E8CF85471}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -241,6 +257,38 @@ Global
 		{110AC7B7-71D4-467F-B5F3-783DE238CBEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{110AC7B7-71D4-467F-B5F3-783DE238CBEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{110AC7B7-71D4-467F-B5F3-783DE238CBEA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{769EBB9C-A3BB-4BAD-AF13-3B31EF70410D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{769EBB9C-A3BB-4BAD-AF13-3B31EF70410D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{769EBB9C-A3BB-4BAD-AF13-3B31EF70410D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{769EBB9C-A3BB-4BAD-AF13-3B31EF70410D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6CC749A-3A9F-4E4C-AF73-B0F7A9D60055}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6CC749A-3A9F-4E4C-AF73-B0F7A9D60055}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6CC749A-3A9F-4E4C-AF73-B0F7A9D60055}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6CC749A-3A9F-4E4C-AF73-B0F7A9D60055}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3391D49-9587-4864-9A26-877B8C7B16A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3391D49-9587-4864-9A26-877B8C7B16A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3391D49-9587-4864-9A26-877B8C7B16A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3391D49-9587-4864-9A26-877B8C7B16A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{809B7A3B-D97C-41D5-BAF5-A364F8EAA67A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{809B7A3B-D97C-41D5-BAF5-A364F8EAA67A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{809B7A3B-D97C-41D5-BAF5-A364F8EAA67A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{809B7A3B-D97C-41D5-BAF5-A364F8EAA67A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38ABA668-4866-4728-B9F7-1D6596AF8985}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38ABA668-4866-4728-B9F7-1D6596AF8985}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38ABA668-4866-4728-B9F7-1D6596AF8985}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38ABA668-4866-4728-B9F7-1D6596AF8985}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C6F4B67-3371-48DA-8BDF-CFEFC0A063ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C6F4B67-3371-48DA-8BDF-CFEFC0A063ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C6F4B67-3371-48DA-8BDF-CFEFC0A063ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C6F4B67-3371-48DA-8BDF-CFEFC0A063ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13658C36-B992-4A9E-BD19-294613D58C64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13658C36-B992-4A9E-BD19-294613D58C64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13658C36-B992-4A9E-BD19-294613D58C64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13658C36-B992-4A9E-BD19-294613D58C64}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CFF090E-EBE5-47CC-BC2C-2A4E8CF85471}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CFF090E-EBE5-47CC-BC2C-2A4E8CF85471}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CFF090E-EBE5-47CC-BC2C-2A4E8CF85471}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CFF090E-EBE5-47CC-BC2C-2A4E8CF85471}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -300,5 +348,13 @@ Global
 		{4B291C53-1DB2-4410-9525-92496CEB492A} = {2EDDA31F-5812-4741-885B-7B73F9B863F1}
 		{5FEE3E08-7781-49CA-8FE1-E31F5480FDC7} = {2EDDA31F-5812-4741-885B-7B73F9B863F1}
 		{110AC7B7-71D4-467F-B5F3-783DE238CBEA} = {87435669-0B21-4173-A6C0-B72D010BE321}
+		{769EBB9C-A3BB-4BAD-AF13-3B31EF70410D} = {0B52ACEE-7C7F-4542-A372-044D69D61A0F}
+		{C6CC749A-3A9F-4E4C-AF73-B0F7A9D60055} = {0B52ACEE-7C7F-4542-A372-044D69D61A0F}
+		{A3391D49-9587-4864-9A26-877B8C7B16A8} = {9CE30B48-9A61-4C31-891F-A36161282CA4}
+		{809B7A3B-D97C-41D5-BAF5-A364F8EAA67A} = {9CE30B48-9A61-4C31-891F-A36161282CA4}
+		{38ABA668-4866-4728-B9F7-1D6596AF8985} = {A50E1702-B0B2-4317-BF1B-31FEEEF29E52}
+		{8C6F4B67-3371-48DA-8BDF-CFEFC0A063ED} = {A50E1702-B0B2-4317-BF1B-31FEEEF29E52}
+		{13658C36-B992-4A9E-BD19-294613D58C64} = {D281EF5C-BD32-49E8-9395-D74FCAA5127E}
+		{4CFF090E-EBE5-47CC-BC2C-2A4E8CF85471} = {D281EF5C-BD32-49E8-9395-D74FCAA5127E}
 	EndGlobalSection
 EndGlobal

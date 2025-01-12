@@ -1,4 +1,3 @@
-using PlantBasedPizza.Order.Core.Entities;
 using PlantBasedPizza.Order.Core.Services;
 using PlantBasedPizza.OrderManager.Infrastructure;
 

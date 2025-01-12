@@ -1,5 +1,5 @@
 using MongoDB.Driver;
-using PlantBasedPizza.Deliver.Infrastructure;
+using PlantBasedPizza.Delivery.Infrastructure;
 using PlantBasedPizza.Events;
 using PlantBasedPizza.Kitchen.Infrastructure;
 using PlantBasedPizza.Order.Infrastructure;
@@ -20,7 +20,7 @@ builder.Services.AddSingleton(client);
 builder.Services.AddOrderManagerInfrastructure(builder.Configuration);
 builder.Services.AddRecipeInfrastructure(builder.Configuration);
 builder.Services.AddKitchenInfrastructure(builder.Configuration);
-builder.Services.AddDeliveryModuleInfrastructure(builder.Configuration);
+builder.Services.AddDeliveryInfrastructure(builder.Configuration);
 builder.Services.AddSharedInfrastructure(builder.Configuration, "PlantBasedPizza");
 builder.Services.AddHttpClient();
 

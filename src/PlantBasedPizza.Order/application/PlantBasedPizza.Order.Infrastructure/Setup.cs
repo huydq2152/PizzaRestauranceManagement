@@ -2,15 +2,15 @@ using Grpc.Core;
 using Grpc.Net.Client.Configuration;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MongoDB.Driver;
 using PlantBasedPizza.Events;
-using PlantBasedPizza.Events.IntegrationEvents;
 using PlantBasedPizza.Order.Core.AddItemToOrder;
 using PlantBasedPizza.Order.Core.CollectOrder;
 using PlantBasedPizza.Order.Core.CreateDeliveryOrder;
 using PlantBasedPizza.Order.Core.CreatePickupOrder;
 using PlantBasedPizza.Order.Core.Entities;
-using PlantBasedPizza.Order.Core.Handlers;
 using PlantBasedPizza.Order.Core.Services;
+using PlantBasedPizza.Order.Infrastructure.IntegrationEvents;
 using PlantBasedPizza.OrderManager.Infrastructure;
 using PlantBasedPizza.Shared.ServiceDiscovery;
 using Polly;
@@ -26,6 +26,12 @@ public static class Setup
     public static IServiceCollection AddOrderManagerInfrastructure(this IServiceCollection services,
         IConfiguration configuration)
     {
+        services.Configure<ServiceEndpoints>(configuration.GetSection("Services"));
+            
+        var client = new MongoClient(configuration["DatabaseConnection"]);
+
+        services.AddSingleton(client);
+        
         BsonClassMap.RegisterClassMap<Core.Entities.Order>(map =>
         {
             map.AutoMap();
@@ -50,6 +56,13 @@ public static class Setup
         });
 
         services.AddGrpcClient(configuration);
+        
+        services.AddStackExchangeRedisCache(options =>
+        {
+            options.Configuration = configuration["RedisConnectionString"];
+            options.InstanceName = "Orders";
+        });
+
 
         services.AddSingleton<IOrderRepository, OrderRepository>();
         services.AddSingleton<CollectOrderCommandHandler>();
@@ -58,17 +71,11 @@ public static class Setup
         services.AddSingleton<CreatePickupOrderCommandHandler>();
         services.AddSingleton<IRecipeService, RecipeService>();
         services.AddSingleton<ILoyaltyPointService, LoyaltyPointService>();
-
-        services.AddSingleton<IHandles<OrderPreparingEvent>, OrderPreparingEventHandler>();
-        services.AddSingleton<IHandles<OrderPrepCompleteEvent>, OrderPrepCompleteEventHandler>();
-        services.AddSingleton<IHandles<OrderBakedEvent>, OrderBakedEventHandler>();
-        services.AddSingleton<IHandles<OrderQualityCheckedEvent>, OrderQualityCheckedEventHandler>();
-        services.AddSingleton<IHandles<OrderDeliveredEvent>, DriverDeliveredOrderEventHandler>();
-        services.AddSingleton<IHandles<DriverCollectedOrderEvent>, DriverCollectedOrderEventHandler>();
-
+        services.AddSingleton<IPaymentService, PaymentService>();
         services.AddSingleton<OrderManagerHealthChecks>();
-        services.AddHttpClient<OrderManagerHealthChecks>()
-            .ConfigureHttpClient(client => client.BaseAddress = new Uri(configuration["Services:Loyalty"]))
+        services.AddSingleton<IOrderEventPublisher, OrderEventPublisher>();
+
+        services.AddHttpClient("service-registry-http-client")
             .AddHttpMessageHandler<ServiceRegistryHttpMessageHandler>()
             .SetHandlerLifetime(TimeSpan.FromMinutes(5))
             .AddPolicyHandler(GetRetryPolicy());

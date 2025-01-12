@@ -2,7 +2,6 @@ using System;
 using System.Linq;
 using FluentAssertions;
 using PlantBasedPizza.Events;
-using PlantBasedPizza.Events.IntegrationEvents;
 using PlantBasedPizza.Order.Core.Entities;
 using Xunit;
 

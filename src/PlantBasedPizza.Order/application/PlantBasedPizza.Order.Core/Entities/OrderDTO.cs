@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using PlantBasedPizza.OrderManager.Core.Entities;
 
 namespace PlantBasedPizza.Order.Core.Entities;
 
@@ -24,6 +25,19 @@ public record OrderDto
             Description = history.Description,
             HistoryDate = history.HistoryDate
         }).ToList();
+        
+        if (order.DeliveryDetails != null)
+        {
+            DeliveryDetails = new DeliveryDetailsDto
+            {
+                AddressLine1 = order.DeliveryDetails.AddressLine1,
+                AddressLine2 = order.DeliveryDetails.AddressLine2,
+                AddressLine3 = order.DeliveryDetails.AddressLine3,
+                AddressLine4 = order.DeliveryDetails.AddressLine4,
+                AddressLine5 = order.DeliveryDetails.AddressLine5,
+                Postcode = order.DeliveryDetails.Postcode,
+            };
+        }
     }
     
     [JsonPropertyName("orderIdentifier")]
@@ -31,6 +45,9 @@ public record OrderDto
     
     [JsonPropertyName("orderNumber")]
     public string OrderNumber { get; set; }
+    
+    [JsonPropertyName("deliveryDetails")]
+    public DeliveryDetailsDto DeliveryDetails { get; set; }
     
     [JsonPropertyName("orderDate")]
     public DateTime OrderDate { get; set; }

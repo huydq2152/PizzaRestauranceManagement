@@ -43,7 +43,7 @@ public class KitchenController(
 
         var kitchenRequest = kitchenRequestRepository.Retrieve(orderIdentifier).Result;
 
-        kitchenRequest.Preparing(Request.Headers["CorrelationId"].ToString());
+        kitchenRequest.Preparing();
 
         kitchenRequestRepository.Update(kitchenRequest).Wait();
 
@@ -80,7 +80,7 @@ public class KitchenController(
     {
         var kitchenRequest = kitchenRequestRepository.Retrieve(orderIdentifier).Result;
 
-        kitchenRequest.PrepComplete(Request.Headers["CorrelationId"].ToString());
+        kitchenRequest.PrepComplete();
 
         kitchenRequestRepository.Update(kitchenRequest).Wait();
 
@@ -117,7 +117,7 @@ public class KitchenController(
     {
         var kitchenRequest = kitchenRequestRepository.Retrieve(orderIdentifier).Result;
 
-        kitchenRequest.BakeComplete(Request.Headers["CorrelationId"].ToString());
+        kitchenRequest.BakeComplete();
 
         kitchenRequestRepository.Update(kitchenRequest).Wait();
 
@@ -134,7 +134,7 @@ public class KitchenController(
     {
         var kitchenRequest = kitchenRequestRepository.Retrieve(orderIdentifier).Result;
 
-        kitchenRequest.QualityCheckComplete(Request.Headers["CorrelationId"].ToString()).Wait();
+        kitchenRequest.QualityCheckComplete().Wait();
 
         kitchenRequestRepository.Update(kitchenRequest).Wait();
 

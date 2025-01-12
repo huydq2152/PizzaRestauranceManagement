@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using FluentAssertions;
 using NetArchTest.Rules;
-using PlantBasedPizza.Deliver.Core.Entities;
+using PlantBasedPizza.Delivery.Core.Entities;
 using PlantBasedPizza.Kitchen.Core.Entities;
 using PlantBasedPizza.Recipes.Core.Entities;
 using Xunit;
@@ -19,8 +19,8 @@ public class DependencyTests
             "PlantBasedPizza.Recipes.Infrastructure",
             "PlantBasedPizza.Kitchen.Core",
             "PlantBasedPizza.Kitchen.Infrastructure",
-            "PlantBasedPizza.Deliver.Core",
-            "PlantBasedPizza.Deliver.Infrastructure",
+            "PlantBasedPizza.Delivery.Core",
+            "PlantBasedPizza.Delivery.Infrastructure",
         };
 
         foreach (var namespaceToCheck in namespacesToCheck)
@@ -40,8 +40,8 @@ public class DependencyTests
             "PlantBasedPizza.Recipes.Infrastructure",
             "PlantBasedPizza.Order.Core",
             "PlantBasedPizza.Order.Infrastructure",
-            "PlantBasedPizza.Deliver.Core",
-            "PlantBasedPizza.Deliver.Infrastructure",
+            "PlantBasedPizza.Delivery.Core",
+            "PlantBasedPizza.Delivery.Infrastructure",
         };
 
         foreach (var namespaceToCheck in namespacesToCheck)
@@ -62,8 +62,8 @@ public class DependencyTests
             "PlantBasedPizza.Order.Infrastructure",
             "PlantBasedPizza.Kitchen.Core",
             "PlantBasedPizza.Kitchen.Infrastructure",
-            "PlantBasedPizza.Deliver.Core",
-            "PlantBasedPizza.Deliver.Infrastructure",
+            "PlantBasedPizza.Delivery.Core",
+            "PlantBasedPizza.Delivery.Infrastructure",
         };
 
         foreach (var namespaceToCheck in namespacesToCheck)

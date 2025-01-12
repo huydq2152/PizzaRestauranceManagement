@@ -20,8 +20,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\PlantBasedPizza.Deliver\application\PlantBasedPizza.Deliver.Core\PlantBasedPizza.Deliver.Core.csproj" />
-    <ProjectReference Include="..\..\..\PlantBasedPizza.Deliver\application\PlantBasedPizza.Deliver.Infrastructure\PlantBasedPizza.Deliver.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\..\PlantBasedPizza.Deliver\application\PlantBasedPizza.Delivery.Core\PlantBasedPizza.Delivery.Core.csproj" />
+    <ProjectReference Include="..\..\..\PlantBasedPizza.Deliver\application\PlantBasedPizza.Delivery.Infrastructure\PlantBasedPizza.Delivery.Infrastructure.csproj" />
     <ProjectReference Include="..\..\..\PlantBasedPizza.Kitchen\application\PlantBasedPizza.Kitchen.Infrastructure\PlantBasedPizza.Kitchen.Infrastructure.csproj" />
     <ProjectReference Include="..\..\..\PlantBasedPizza.Order\application\PlantBasedPizza.Order.Infrastructure\PlantBasedPizza.Order.Infrastructure.csproj" />
     <ProjectReference Include="..\..\..\PlantBasedPizza.Recipe\application\PlantBasedPizza.Recipes.Infrastructure\PlantBasedPizza.Recipes.Infrastructure.csproj" />

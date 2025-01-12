@@ -1,6 +1,5 @@
 using System.Text.Json.Serialization;
 using PlantBasedPizza.Events;
-using PlantBasedPizza.Events.IntegrationEvents;
 using PlantBasedPizza.Kitchen.Core.Adapters;
 using PlantBasedPizza.Shared.Guards;
 
@@ -49,49 +48,29 @@ public class KitchenRequest
     [JsonPropertyName("recipes")]
     public List<RecipeAdapter> Recipes { get; private set; }
 
-    public void Preparing(string correlationId = "")
+    public void Preparing()
     {
         OrderState = OrderState.Preparing;
-
-        DomainEvents.Raise(new OrderPreparingEvent(OrderIdentifier)
-        {
-            CorrelationId = correlationId
-        });
     }
 
-    public void PrepComplete(string correlationId = "")
+    public void PrepComplete()
     {
         OrderState = OrderState.Baking;
             
         PrepCompleteOn = DateTime.Now;
-            
-        DomainEvents.Raise(new OrderPrepCompleteEvent(OrderIdentifier)
-        {
-            CorrelationId = correlationId
-        });
     }
 
-    public void BakeComplete(string correlationId = "")
+    public void BakeComplete()
     {
         OrderState = OrderState.Qualitycheck;
             
         BakeCompleteOn = DateTime.Now;
-            
-        DomainEvents.Raise(new OrderBakedEvent(OrderIdentifier)
-        {
-            CorrelationId = correlationId
-        });
     }
 
-    public async Task QualityCheckComplete(string correlationId = "")
+    public async Task QualityCheckComplete()
     {
         OrderState = OrderState.Done;
             
         QualityCheckCompleteOn = DateTime.Now;
-
-        await DomainEvents.Raise(new OrderQualityCheckedEvent(OrderIdentifier)
-        {
-            CorrelationId = correlationId
-        });
     }
 }
