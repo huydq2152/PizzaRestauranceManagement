@@ -21,6 +21,7 @@
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.9.0" />
+        <PackageReference Include="Serilog.Extensions.Logging" Version="8.0.0" />
         <PackageReference Include="SpecFlow.Plus.LivingDocPlugin" Version="3.9.57" />
         <PackageReference Include="SpecFlow.xUnit" Version="3.9.74" />
         <PackageReference Include="WireMock.Net" Version="1.5.48" />
@@ -43,6 +44,10 @@
             <DesignTime>true</DesignTime>
             <Visible>true</Visible>
         </Compile>
+    </ItemGroup>
+    
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\PlantBasedPizza.Shared\application\PlantBasedPizza.Events\PlantBasedPizza.Events.csproj" />
     </ItemGroup>
 
 </Project>

@@ -1,5 +1,6 @@
 using FakeItEasy;
 using FluentAssertions;
+using Microsoft.Extensions.Logging;
 using PlantBasedPizza.LoyaltyPoints.Shared.Core;
 
 namespace PlantBasedPizza.LoyaltyPoints.UnitTest;
@@ -10,12 +11,14 @@ public class LoyaltyUnitTests
     public async Task CanAddLoyaltyPoints_ShouldReturnValidObject()
     {
         var mockRepo = A.Fake<ICustomerLoyaltyPointsRepository>();
+        var mockLogger = A.Fake<ILogger<AddLoyaltyPointsCommandHandler>>();
+        
         var customerId = "james";
         CustomerLoyaltyPoints? response = null;
         
         A.CallTo(() => mockRepo.GetCurrentPointsFor(customerId)).Returns(response);
         
-        var handler = new AddLoyaltyPointsCommandHandler(mockRepo);
+        var handler = new AddLoyaltyPointsCommandHandler(mockRepo, mockLogger);
 
         var handleResponse = await handler.Handle(new AddLoyaltyPointsCommand()
         {
@@ -23,7 +26,6 @@ public class LoyaltyUnitTests
             OrderValue = 50.79M
         });
 
-        handleResponse.CustomerIdentifier.Should().Be(customerId);
         handleResponse.TotalPoints.Should().Be(51);
     }
     
@@ -31,6 +33,8 @@ public class LoyaltyUnitTests
     public async Task CanAddLoyaltyPointsForExisting_ShouldReturnValidObject()
     {
         var mockRepo = A.Fake<ICustomerLoyaltyPointsRepository>();
+        var mockLogger = A.Fake<ILogger<AddLoyaltyPointsCommandHandler>>();
+        
         var customerId = "james";
         CustomerLoyaltyPoints response = new CustomerLoyaltyPoints()
         {
@@ -40,7 +44,7 @@ public class LoyaltyUnitTests
         
         A.CallTo(() => mockRepo.GetCurrentPointsFor(customerId)).Returns(response);
         
-        var handler = new AddLoyaltyPointsCommandHandler(mockRepo);
+        var handler = new AddLoyaltyPointsCommandHandler(mockRepo, mockLogger);
 
         var handleResponse = await handler.Handle(new AddLoyaltyPointsCommand()
         {
@@ -48,7 +52,6 @@ public class LoyaltyUnitTests
             OrderValue = 50.79M
         });
 
-        handleResponse.CustomerIdentifier.Should().Be(customerId);
         handleResponse.TotalPoints.Should().Be(201);
     }
     
@@ -73,7 +76,6 @@ public class LoyaltyUnitTests
             PointsToSpend = 50
         });
 
-        handleResponse.CustomerIdentifier.Should().Be(customerId);
         handleResponse.TotalPoints.Should().Be(100);
     }
     

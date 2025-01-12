@@ -2,11 +2,29 @@ using System.Text.Json.Serialization;
 
 namespace PlantBasedPizza.LoyaltyPoints.Shared.Core;
 
-public class LoyaltyPointsDto(CustomerLoyaltyPoints points)
+public class LoyaltyPointsDto
 {
-    [JsonPropertyName("customerIdentifier")]
-    public string CustomerIdentifier { get; set; } = points.CustomerId;
+    public LoyaltyPointsDto(decimal totalPoints)
+    {
+        TotalPoints = totalPoints;
+        History = new List<LoyaltyPointHistoryDto>();
+    }
 
-    [JsonPropertyName("totalPoints")]
-    public decimal TotalPoints { get; set; } = points.TotalPoints;
+    public LoyaltyPointsDto(CustomerLoyaltyPoints points)
+    {
+        TotalPoints = points.TotalPoints;
+        History = points.History.Select(history => new LoyaltyPointHistoryDto
+        {
+            DateTime = history.DateTime,
+            PointsAdded = history.PointsAdded,
+            OrderIdentifier = history.OrderIdentifier,
+            OrderValue = history.OrderValue
+        }).ToList();
+    }
+ 
+    [JsonPropertyName("totalPoints")] 
+    public decimal TotalPoints { get; set; }
+
+    [JsonPropertyName("history")] 
+    public List<LoyaltyPointHistoryDto> History { get; set; }
 }
