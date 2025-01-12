@@ -70,6 +70,9 @@ public class Order
 
     [JsonProperty]
     public DateTime OrderDate { get; private set; }
+    
+    [JsonProperty]
+    public decimal LoyaltyPointsAtOrder { get; private set; }
         
     [JsonProperty]
     public bool AwaitingCollection { get; private set; }
@@ -179,6 +182,11 @@ public class Order
         {
             TotalPrice += DefaultDeliveryPrice;
         }
+    }
+    
+    public void AddCustomerLoyaltyPoints(decimal pointsAtTimeOfOrder)
+    {
+        LoyaltyPointsAtOrder = pointsAtTimeOfOrder;
     }
 
     public void SubmitOrder(string correlationId = "")

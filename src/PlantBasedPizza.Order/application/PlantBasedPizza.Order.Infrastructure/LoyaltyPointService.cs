@@ -1,33 +1,50 @@
+using System.Diagnostics;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 using PlantBasedPizza.Order.Core.Services;
 using PlantBasedPizza.OrderManager.Infrastructure;
+using StackExchange.Redis;
 
 namespace PlantBasedPizza.Order.Infrastructure;
 
-public class LoyaltyPointService(Loyalty.LoyaltyClient loyaltyClient, ILogger<LoyaltyPointService> logger)
+public class LoyaltyPointService(
+    Loyalty.LoyaltyClient loyaltyClient,
+    ILogger<LoyaltyPointService> logger,
+    IDistributedCache distributedCache)
     : ILoyaltyPointService
 {
-    public async Task AddLoyaltyPoints(string customerId, string orderIdentifier, decimal orderValue)
+    public async Task<decimal> GetCustomerLoyaltyPoints(string customerId)
     {
         try
         {
-            var createLoyaltyPointsResult = await loyaltyClient.AddLoyaltyPointsAsync(
-                new AddLoyaltyPointsRequest()
-                {
-                    CustomerIdentifier = customerId,
-                    OrderIdentifier = orderIdentifier,
-                    OrderValue = (double)orderValue,
-                });
+            var cacheCheck = await distributedCache.GetStringAsync(customerId);
 
-            if (createLoyaltyPointsResult is null)
+            if (cacheCheck != null)
             {
-                throw new Exception("Failure sending loyalty points");
+                Activity.Current?.AddTag("loyalty.cacheHit", true);
+
+                return decimal.Parse(cacheCheck);
             }
         }
-        catch (Exception e)
+        catch (RedisServerException ex)
         {
-            logger.LogInformation(e, "Failure");
-            throw;
+            logger.LogError(ex, "Failure reading loyalty points from cache");
+
+            Activity.Current?.AddTag("cache.failure", true);
         }
+
+        Activity.Current?.AddTag("loyalty.cacheMiss", true);
+
+        var loyaltyPoints = await loyaltyClient.GetCustomerLoyaltyPointsAsync(
+            new GetCustomerLoyaltyPointsRequest
+            {
+                CustomerIdentifier = customerId
+            });
+
+        await distributedCache.SetStringAsync(customerId, loyaltyPoints.TotalPoints.ToString("n0"));
+        
+        return Convert.ToDecimal(loyaltyPoints.TotalPoints);
+
+        return 0;
     }
 }

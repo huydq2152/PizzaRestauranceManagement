@@ -5,5 +5,5 @@ namespace PlantBasedPizza.Order.Core.CollectOrder;
 public class CollectOrderRequest
 {
     [JsonPropertyName("OrderIdentifier")]
-    public string OrderIdentifier => "";
+    public string OrderIdentifier { get; init; } = "";
 }

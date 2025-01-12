@@ -3,7 +3,7 @@ using PlantBasedPizza.Order.Core.Services;
 
 namespace PlantBasedPizza.Order.Core.CollectOrder;
 
-public class CollectOrderCommandHandler(IOrderRepository orderRepository, ILoyaltyPointService loyaltyPointService)
+public class CollectOrderCommandHandler(IOrderRepository orderRepository, IOrderEventPublisher eventPublisher)
 {
     public async Task<OrderDto?> Handle(CollectOrderRequest command)
     {
@@ -18,10 +18,7 @@ public class CollectOrderCommandHandler(IOrderRepository orderRepository, ILoyal
 
             existingOrder.CompleteOrder();
             
-            await loyaltyPointService.AddLoyaltyPoints(
-                existingOrder.CustomerIdentifier,
-                existingOrder.OrderIdentifier,
-                existingOrder.TotalPrice);
+            await eventPublisher.PublishOrderCompletedEventV1(existingOrder);
 
             await orderRepository.Update(existingOrder).ConfigureAwait(false);
 

@@ -5,12 +5,16 @@ using PlantBasedPizza.Order.Core.CollectOrder;
 using PlantBasedPizza.Order.Core.CreateDeliveryOrder;
 using PlantBasedPizza.Order.Core.CreatePickupOrder;
 using PlantBasedPizza.Order.Core.Entities;
+using PlantBasedPizza.Order.Core.Services;
 
 namespace PlantBasedPizza.Order.Infrastructure.Controllers;
 
 [Route("order")]
 public class OrderController(
     IOrderRepository orderRepository,
+    IPaymentService paymentService,
+    IOrderEventPublisher eventPublisher,
+    ILoyaltyPointService loyaltyPointService,
     CollectOrderCommandHandler collectOrderCommandHandler,
     AddItemToOrderHandler addItemToOrderHandler,
     CreateDeliveryOrderCommandHandler createDeliveryOrderCommandHandler,
@@ -28,14 +32,14 @@ public class OrderController(
         try
         {
             Activity.Current?.SetTag("orderIdentifier", orderIdentifier);
-                
+
             var order = await orderRepository.Retrieve(orderIdentifier).ConfigureAwait(false);
-                
+
             return new OrderDto(order);
         }
         catch (OrderNotFoundException)
         {
-            Response.StatusCode = 404;
+            this.Response.StatusCode = 404;
             Activity.Current?.AddTag("order.notFound", true);
 
             return null;
@@ -48,8 +52,10 @@ public class OrderController(
     /// <param name="request">The <see cref="CreatePickupOrderCommand"/> command contents.</param>
     /// <returns></returns>
     [HttpPost("pickup")]
-    public async Task<OrderDto?> Create([FromBody] CreatePickupOrderCommand request) =>
-        await createPickupOrderCommandHandler.Handle(request);
+    public async Task<OrderDto?> Create([FromBody] CreatePickupOrderCommand request)
+    {
+        return await createPickupOrderCommandHandler.Handle(request);
+    }
 
     /// <summary>
     /// Create a new delivery order.
@@ -57,8 +63,10 @@ public class OrderController(
     /// <param name="request">The <see cref="CreateDeliveryOrder"/> request.</param>
     /// <returns></returns>
     [HttpPost("deliver")]
-    public async Task<OrderDto?> Create([FromBody] CreateDeliveryOrder request) =>
-        await createDeliveryOrderCommandHandler.Handle(request);
+    public async Task<OrderDto?> Create([FromBody] CreateDeliveryOrder request)
+    {
+        return await createDeliveryOrderCommandHandler.Handle(request);
+    }
 
     /// <summary>
     /// Add an item to the order.
@@ -74,12 +82,12 @@ public class OrderController(
 
         if (order is null)
         {
-            Response.StatusCode = 404;
+            this.Response.StatusCode = 404;
         }
 
         return new OrderDto(order);
     }
-        
+
     /// <summary>
     /// Submit an order.
     /// </summary>
@@ -90,9 +98,14 @@ public class OrderController(
     {
         var order = await orderRepository.Retrieve(orderIdentifier);
 
+        await paymentService.TakePaymentFor(order);
+        var loyaltyPoints = await loyaltyPointService.GetCustomerLoyaltyPoints(order.CustomerIdentifier);
+
+        order.AddCustomerLoyaltyPoints(loyaltyPoints);
         order.SubmitOrder();
 
         await orderRepository.Update(order);
+        await eventPublisher.PublishOrderSubmittedEventV1(order);
 
         return new OrderDto(order);
     }

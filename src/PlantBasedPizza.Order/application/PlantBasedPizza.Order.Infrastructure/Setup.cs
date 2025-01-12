@@ -63,7 +63,6 @@ public static class Setup
             options.InstanceName = "Orders";
         });
 
-
         services.AddSingleton<IOrderRepository, OrderRepository>();
         services.AddSingleton<CollectOrderCommandHandler>();
         services.AddSingleton<AddItemToOrderHandler>();
